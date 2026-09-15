@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 1: Nouns to Know - Interactive Unit</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #eff6ff;
+      --secondary: #0284c7;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --neutral-light: #f8fafc;
+      --border: #cbd5e1;
+      --text: #1e293b;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #e2e8f0; margin: 0; padding: 20px; color: var(--text); }
+    .unit-container { max-width: 950px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; }
+    header { background: #0f172a; color: white; padding: 20px 25px; }
+    header h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: 700; }
+    header p { margin: 0; color: #94a3b8; font-size: 14px; }
+    
+    /* Navigation Bar */
+    .tab-bar { display: flex; background: #1e293b; overflow-x: auto; border-bottom: 2px solid #334155; }
+    .tab-btn { flex: 1; padding: 12px 10px; border: none; background: transparent; color: #cbd5e1; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; white-space: nowrap; transition: 0.2s; }
+    .tab-btn:hover { background: #334155; color: white; }
+    .tab-btn.active { background: var(--primary); color: white; border-bottom: 3px solid #60a5fa; }
+    
+    /* Content Layout */
+    .page-view { display: none; padding: 30px; }
+    .page-view.active { display: block; }
+    .page-header { border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px; }
+    .page-header h2 { margin: 0 0 6px 0; color: var(--primary); font-size: 20px; }
+    .page-header p { margin: 0; color: #64748b; font-size: 14px; }
+    
+    .word-bank { display: flex; flex-wrap: wrap; gap: 8px; background: var(--primary-light); border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 14px; font-weight: 600; color: var(--primary); }
+    .tip-box { background: #fefce8; border-left: 4px solid #ca8a04; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 13.5px; line-height: 1.5; }
+    
+    /* Interactive Reading (Page 1) */
+    .story-text { line-height: 1.8; font-size: 16px; background: var(--neutral-light); padding: 22px; border-radius: 8px; border: 1px solid var(--border); }
+    .vocab-target { background: #fef08a; padding: 1px 6px; border-radius: 4px; cursor: pointer; font-weight: 600; color: #854d0e; text-decoration: underline dotted; }
+    .vocab-target:hover { background: #fde047; }
+    .def-card { margin-top: 15px; padding: 15px; background: #e0f2fe; border: 1px solid #7dd3fc; border-radius: 8px; display: none; }
+    
+    /* Inputs & Quizzes */
+    .q-item { margin-bottom: 18px; padding: 14px; background: var(--neutral-light); border-radius: 8px; border: 1px solid #e2e8f0; }
+    .q-text { font-weight: 600; margin-bottom: 10px; font-size: 14.5px; }
+    input[type="text"], select, textarea { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 14px; width: 100%; max-width: 400px; box-sizing: border-box; }
+    textarea { max-width: 100%; resize: vertical; min-height: 90px; }
+    input.correct, select.correct { border-color: var(--success); background: var(--success-bg); }
+    input.incorrect, select.incorrect { border-color: var(--danger); background: var(--danger-bg); }
+    .feedback { font-size: 12.5px; font-weight: bold; margin-top: 5px; }
+    .feedback.correct { color: var(--success); }
+    .feedback.incorrect { color: var(--danger); }
+    
+    /* Acrostic Puzzle (Page 2) */
+    .acrostic-grid { display: flex; gap: 8px; margin: 15px 0; }
+    .letter-tile { width: 34px; height: 34px; border: 2px solid #ca8a04; background: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: #854d0e; }
+    
+    /* Categorizer Drag/Drop (Page 5) */
+    .chip-pool { display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px; background: #e2e8f0; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+    .chip { padding: 6px 12px; background: var(--primary); color: white; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: grab; user-select: none; }
+    .cat-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+    .cat-dropzone { min-height: 200px; border: 2px dashed var(--border); border-radius: 8px; padding: 12px; background: var(--neutral-light); display: flex; flex-direction: column; gap: 8px; }
+    .cat-dropzone.over { border-color: var(--secondary); background: #f0f9ff; }
+    .cat-dropzone h4 { margin: 0 0 10px 0; text-align: center; color: #475569; }
+
+    /* Bottom Actions & Controls */
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: #f1f5f9; border-top: 1px solid var(--border); }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-outline { background: white; border: 1px solid var(--border); color: #334155; }
+    .btn-outline:hover { background: #f8fafc; }
+    .score-alert { padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 700; margin-bottom: 20px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="unit-container">
+  <header>
+    <h1>Chapter 1: Context Clues</h1>
+    <p>Lesson 1: Nouns to Know (Grade 5)</p>
+  </header>
+
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchPage(1)">1. Read Context</button>
+    <button class="tab-btn" onclick="switchPage(2)">2. Connect Meanings</button>
+    <button class="tab-btn" onclick="switchPage(3)">3. Matching & Cloze</button>
+    <button class="tab-btn" onclick="switchPage(4)">4. Context Writing</button>
+    <button class="tab-btn" onclick="switchPage(5)">5. Categorize Nouns</button>
+    <button class="tab-btn" onclick="switchPage(6)">6. Plurals Drill</button>
+    <button class="tab-btn" onclick="switchPage(7)">7. Check Mastery</button>
+  </nav>
+
+  <!-- PAGE 1: READ WORDS IN CONTEXT -->
+  <section class="page-view active" id="p1">
+    <div class="page-header">
+      <h2>Page 6: Read Words in Context</h2>
+      <p>Click any highlighted vocabulary word to inspect its definition and context clues.</p>
+    </div>
+
+    <div class="tip-box">
+      <strong>Word Learning Tip:</strong> A noun names a person, place, or thing. Nouns often follow words like <em>a</em>, <em>an</em>, or <em>the</em>, and can come right before a verb.
+    </div>
+
+    <div class="story-text">
+      <h3>Race for the North Pole</h3>
+      <p>The race was on! In 1909 in the far north, Matthew Henson and Robert Peary struggled against icy blasts of wind. They traveled in a special <span class="vocab-target" onclick="showDef('vehicle', 'noun: something used to carry people or objects over land or water')">vehicle</span>—a dog sled—because cars and trucks could not pass across the frozen Arctic Ocean. That's because the <span class="vocab-target" onclick="showDef('foundation', 'noun: base; the basis on which something stands')">foundation</span> of the ocean is an unsteady base of gleaming ice chunks.</p>
+      
+      <p>Their progress was slow and difficult. Icy winds prevented them from seeing. Huge boulders of ice blocked their path. Because of these <span class="vocab-target" onclick="showDef('obstacle', 'noun: a barrier or thing that hinders progress')">obstacles</span>, the men couldn't tell if they were on the <span class="vocab-target" onclick="showDef('mainland', 'noun: the largest mass of land of a country or continent')">mainland</span>, on an island, or on the frozen ocean.</p>
+      
+      <p>The bitter cold was more than a <span class="vocab-target" onclick="showDef('nuisance', 'noun: a bother or annoyance')">nuisance</span>. It was a huge <span class="vocab-target" onclick="showDef('challenge', 'noun: something difficult that requires extra effort or work to do')">challenge</span>, something to overcome. Frostbite was an ever-present danger. As a <span class="vocab-target" onclick="showDef('precaution', 'noun: action taken ahead of time to prevent danger or trouble')">precaution</span>, the men wore thick fur jackets, hats, and gloves to protect them from the biting wind.</p>
+      
+      <p>Their <span class="vocab-target" onclick="showDef('target', 'noun: goal or something aimed at')">target</span> was the North Pole. They wanted to be the first to reach this goal. This was their fifth attempt! Would their <span class="vocab-target" onclick="showDef('scheme', 'noun: a plan or plot to do something')">scheme</span>, or plan, work this time? Now they had a <span class="vocab-target" onclick="showDef('rival', 'noun: competitor or opponent')">rival</span>, another explorer named Frederick Cook. Cook was in close <span class="vocab-target" onclick="showDef('pursuit', 'noun: the act of chasing someone or something')">pursuit</span>, just a little behind them.</p>
+      
+      <p>Henson and Peary had two <span class="vocab-target" onclick="showDef('advantage', 'noun: something that helps a person or gives a better chance')">advantages</span>. First, Henson worked with the Inuit people as an <span class="vocab-target" onclick="showDef('agent', 'noun: person who arranges things or represents other people')">agent</span>, making deals for food. Second, Henson was a <span class="vocab-target" onclick="showDef('genius', 'noun: an unusually intelligent and gifted person')">genius</span> at fixing equipment, serving as the group's <span class="vocab-target" onclick="showDef('mechanic', 'noun: person skilled at repairing machinery')">mechanic</span>.</p>
+    </div>
+
+    <div id="def-display" class="def-card">
+      <strong id="def-word" style="text-transform: capitalize; color: var(--primary);"></strong>: 
+      <span id="def-body"></span>
+    </div>
+  </section>
+
+  <!-- PAGE 2: CONNECT WORDS AND MEANINGS -->
+  <section class="page-view" id="p2">
+    <div class="page-header">
+      <h2>Page 7: Connect Words and Meanings</h2>
+      <p>Enter the correct vocabulary word for each clue. Solve clues 1–9 to fill the mystery tiles.</p>
+    </div>
+
+    <div class="word-bank">
+      advantage • agent • challenge • foundation • genius • mainland • mechanic • nuisance • obstacle • precaution • pursuit • rival • scheme • target • vehicle
+    </div>
+
+    <div id="acrostic-questions">
+      <div class="q-item">
+        <div class="q-text">1. Person who arranges things for other people or represents other people:</div>
+        <input type="text" data-ans="agent" data-tile="0" data-char="A" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">2. Base; the basis on which something stands:</div>
+        <input type="text" data-ans="foundation" data-tile="1" data-char="D" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">3. Something used to carry people or objects over land or sea:</div>
+        <input type="text" data-ans="vehicle" data-tile="2" data-char="V" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">4. Something difficult that requires extra effort or work to do:</div>
+        <input type="text" data-ans="challenge" data-tile="3" data-char="A" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">5. A bother or annoyance:</div>
+        <input type="text" data-ans="nuisance" data-tile="4" data-char="N" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">6. Goal or something that is aimed at:</div>
+        <input type="text" data-ans="target" data-tile="5" data-char="T" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">7. The largest mass of land of a country or continent:</div>
+        <input type="text" data-ans="mainland" data-tile="6" data-char="A" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">8. An unusually intelligent and gifted person:</div>
+        <input type="text" data-ans="genius" data-tile="7" data-char="G" oninput="checkAcrostic(this)">
+      </div>
+      <div class="q-item">
+        <div class="q-text">9. Person skilled at repairing machinery:</div>
+        <input type="text" data-ans="mechanic" data-tile="8" data-char="E" oninput="checkAcrostic(this)">
+      </div>
+    </div>
+
+    <div style="background: #fefce8; border: 2px dashed #ca8a04; padding: 20px; border-radius: 8px; margin-top: 20px;">
+      <h4 style="margin: 0 0 10px 0; color: #854d0e;">Mystery Word Revealed:</h4>
+      <div class="acrostic-grid">
+        <div class="letter-tile" id="tile-0">?</div><div class="letter-tile" id="tile-1">?</div>
+        <div class="letter-tile" id="tile-2">?</div><div class="letter-tile" id="tile-3">?</div>
+        <div class="letter-tile" id="tile-4">?</div><div class="letter-tile" id="tile-5">?</div>
+        <div class="letter-tile" id="tile-6">?</div><div class="letter-tile" id="tile-7">?</div>
+        <div class="letter-tile" id="tile-8">?</div>
+      </div>
+      <div style="margin-top: 15px;">
+        <strong>10. Something that helps a person or gives a person a better chance:</strong><br><br>
+        <input type="text" id="acrostic-final" placeholder="Type the mystery word..." oninput="checkMysteryWord(this)">
+        <span id="final-feedback" class="feedback"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: CONNECT MORE WORDS AND MEANINGS -->
+  <section class="page-view" id="p3">
+    <div class="page-header">
+      <h2>Page 8: Connect More Words & Meanings</h2>
+      <p>Choose the correct multiple-choice definition, complete the sentences, and create your chant.</p>
+    </div>
+
+    <h3>Multiple Choice (11–15)</h3>
+    <div class="q-item">
+      <div class="q-text">11. A plan or plot to do something:</div>
+      <select id="mc-11" onchange="checkSelect(this, 'scheme')">
+        <option value="">-- Choose Word --</option>
+        <option value="genius">genius</option>
+        <option value="agent">agent</option>
+        <option value="mechanic">mechanic</option>
+        <option value="scheme">scheme</option>
+      </select>
+    </div>
+    <div class="q-item">
+      <div class="q-text">12. Barrier:</div>
+      <select id="mc-12" onchange="checkSelect(this, 'obstacle')">
+        <option value="">-- Choose Word --</option>
+        <option value="pursuit">pursuit</option>
+        <option value="target">target</option>
+        <option value="obstacle">obstacle</option>
+        <option value="precaution">precaution</option>
+      </select>
+    </div>
+    <div class="q-item">
+      <div class="q-text">13. Someone or something that is an opponent or competitor:</div>
+      <select id="mc-13" onchange="checkSelect(this, 'rival')">
+        <option value="">-- Choose Word --</option>
+        <option value="rival">rival</option>
+        <option value="mechanic">mechanic</option>
+        <option value="agent">agent</option>
+        <option value="genius">genius</option>
+      </select>
+    </div>
+    <div class="q-item">
+      <div class="q-text">14. The act or instance of chasing someone or something:</div>
+      <select id="mc-14" onchange="checkSelect(this, 'pursuit')">
+        <option value="">-- Choose Word --</option>
+        <option value="challenge">challenge</option>
+        <option value="pursuit">pursuit</option>
+        <option value="vehicle">vehicle</option>
+        <option value="mainland">mainland</option>
+      </select>
+    </div>
+    <div class="q-item">
+      <div class="q-text">15. Action taken ahead of time to prevent something dangerous:</div>
+      <select id="mc-15" onchange="checkSelect(this, 'precaution')">
+        <option value="">-- Choose Word --</option>
+        <option value="precaution">precaution</option>
+        <option value="foundation">foundation</option>
+        <option value="advantage">advantage</option>
+        <option value="pursuit">pursuit</option>
+      </select>
+    </div>
+
+    <h3>Fill in the Blanks (16–18)</h3>
+    <div class="q-item">
+      <div class="q-text">16. One business might try to come up with a 
+        <input type="text" style="width:130px;" id="fib-16a" oninput="checkInline(this, 'scheme')"> 
+        to get an 
+        <input type="text" style="width:130px;" id="fib-16b" oninput="checkInline(this, 'advantage')"> 
+        over another business.
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">17. A 
+        <input type="text" style="width:130px;" id="fib-17a" oninput="checkInline(this, 'mechanic')"> 
+        works hard to make sure a 
+        <input type="text" style="width:130px;" id="fib-17b" oninput="checkInline(this, 'vehicle')"> 
+        is in safe condition.
+      </div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">18. Ramon and his 
+        <input type="text" style="width:130px;" id="fib-18a" oninput="checkInline(this, 'rival')"> 
+        Jason each tried to jump over the 
+        <input type="text" style="width:130px;" id="fib-18b" oninput="checkInline(this, 'obstacle')"> 
+        on the track.
+      </div>
+    </div>
+
+    <h3>Create a Chant</h3>
+    <p>Using at least three vocabulary words, compose a short rhyme or chant:</p>
+    <textarea placeholder="Write your chant here..."></textarea>
+  </section>
+
+  <!-- PAGE 4: USE WORDS IN CONTEXT -->
+  <section class="page-view" id="p4">
+    <div class="page-header">
+      <h2>Page 9: Use Words in Context</h2>
+      <p>Type two distinct answers for each prompt based on the bolded vocabulary words.</p>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">1. Name two reasons why you would want to travel in a <strong>vehicle</strong> such as a car while exploring:</div>
+      <input type="text" placeholder="Reason 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Reason 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">2. Name two things that would give you an <strong>advantage</strong> so you have a better chance while exploring:</div>
+      <input type="text" placeholder="Advantage 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Advantage 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">3. Name two <strong>obstacles</strong> that could prevent you from exploring a new place:</div>
+      <input type="text" placeholder="Obstacle 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Obstacle 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">4. Name two <strong>precautions</strong> you would take to keep safe while you explore:</div>
+      <input type="text" placeholder="Precaution 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Precaution 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">5. Name two things that could be a <strong>nuisance</strong> while you are exploring:</div>
+      <input type="text" placeholder="Nuisance 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Nuisance 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">6. Name two <strong>challenges</strong> you might face while exploring:</div>
+      <input type="text" placeholder="Challenge 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Challenge 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">7. Name two <strong>targets</strong> you would want to reach while exploring:</div>
+      <input type="text" placeholder="Target 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Target 2">
+    </div>
+    <div class="q-item">
+      <div class="q-text">8. Name two reasons to explore the <strong>mainland</strong> rather than an island:</div>
+      <input type="text" placeholder="Reason 1" style="margin-bottom: 8px;"><br>
+      <input type="text" placeholder="Reason 2">
+    </div>
+
+    <h3>Letter in a Bottle</h3>
+    <p>Imagine you got lost while exploring. Write a rescue note. Include as many vocabulary words as you can:</p>
+    <textarea id="rescue-note" oninput="trackVocabWords()" placeholder="Dear Rescuer..."></textarea>
+    <div id="vocab-tracker" style="margin-top: 10px; font-size: 13px; color: #64748b;">
+      Vocabulary words used: <span id="used-count" style="font-weight: bold; color: var(--primary);">0</span> / 15
+    </div>
+  </section>
+
+  <!-- PAGE 5: PUT WORDS INTO ACTION -->
+  <section class="page-view" id="p5">
+    <div class="page-header">
+      <h2>Page 10: Put Words Into Action</h2>
+      <p>Drag each noun chip into the appropriate journal category. (Note: <em>nuisance</em> can fit People or Things).</p>
+    </div>
+
+    <div class="chip-pool" id="pool" ondragover="allowDrop(event)" ondrop="handleDrop(event)">
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="agent" data-cat="people">agent</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="genius" data-cat="people">genius</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="mechanic" data-cat="people">mechanic</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="rival" data-cat="people">rival</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="mainland" data-cat="places">mainland</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="advantage" data-cat="things">advantage</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="challenge" data-cat="things">challenge</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="foundation" data-cat="things">foundation</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="obstacle" data-cat="things">obstacle</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="precaution" data-cat="things">precaution</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="pursuit" data-cat="things">pursuit</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="scheme" data-cat="things">scheme</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="target" data-cat="things">target</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="vehicle" data-cat="things">vehicle</div>
+      <div class="chip" draggable="true" ondragstart="drag(event)" id="nuisance" data-cat="people,things">nuisance</div>
+    </div>
+
+    <div class="cat-columns">
+      <div class="cat-dropzone" id="people" ondragover="allowDrop(event)" ondrop="handleDrop(event)">
+        <h4>People</h4>
+      </div>
+      <div class="cat-dropzone" id="places" ondragover="allowDrop(event)" ondrop="handleDrop(event)">
+        <h4>Places</h4>
+      </div>
+      <div class="cat-dropzone" id="things" ondragover="allowDrop(event)" ondrop="handleDrop(event)">
+        <h4>Things</h4>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 10px; align-items: center;">
+      <button class="btn btn-primary" onclick="checkCategories()">Check Sorting</button>
+      <span id="cat-feedback" style="font-weight: bold;"></span>
+    </div>
+
+    <h3 style="margin-top: 30px;">Add Extra Words</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+      <div>
+        <label><strong>Extra People:</strong></label>
+        <input type="text" placeholder="Person 1" style="margin: 6px 0;">
+        <input type="text" placeholder="Person 2">
+      </div>
+      <div>
+        <label><strong>Extra Places:</strong></label>
+        <input type="text" placeholder="Place 1" style="margin: 6px 0;">
+        <input type="text" placeholder="Place 2">
+      </div>
+      <div>
+        <label><strong>Extra Things:</strong></label>
+        <input type="text" placeholder="Thing 1" style="margin: 6px 0;">
+        <input type="text" placeholder="Thing 2">
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 6: REVIEW AND EXTEND -->
+  <section class="page-view" id="p6">
+    <div class="page-header">
+      <h2>Page 11: Review and Extend (Plural Nouns)</h2>
+      <p>Make each replacement noun plural using <em>-s</em>, <em>-es</em>, or <em>-ies</em>.</p>
+    </div>
+
+    <div class="tip-box">
+      <strong>Plural Rules:</strong> Most nouns add <strong>-s</strong>. Nouns ending in <em>s, x, z, ch</em>, or <em>sh</em> add <strong>-es</strong>. Nouns ending in a consonant + <em>y</em> change <em>y</em> to <strong>-ies</strong>.
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">1. Good explorers should be remarkably smart and gifted people when it comes to solving problems.<br>
+      <em>Which word can replace "remarkably smart and gifted people" in plural form?</em></div>
+      <input type="text" data-plural="geniuses" oninput="checkPlural(this)">
+    </div>
+    <div class="q-item">
+      <div class="q-text">2. Their opponents wanted to be the first to reach the North Pole.<br>
+      <em>Which plural word can replace "opponents"?</em></div>
+      <input type="text" data-plural="rivals" oninput="checkPlural(this)">
+    </div>
+    <div class="q-item">
+      <div class="q-text">3. Explorers face many barriers on their voyages.<br>
+      <em>Which plural word can replace "barriers"?</em></div>
+      <input type="text" data-plural="obstacles" oninput="checkPlural(this)">
+    </div>
+    <div class="q-item">
+      <div class="q-text">4. There are many annoyances too, like bugs!<br>
+      <em>Which plural word can replace "annoyances"?</em></div>
+      <input type="text" data-plural="nuisances" oninput="checkPlural(this)">
+    </div>
+    <div class="q-item">
+      <div class="q-text">5. But these brave men and women reach their goals.<br>
+      <em>Which plural word can replace "goals"?</em></div>
+      <input type="text" data-plural="targets" oninput="checkPlural(this)">
+    </div>
+
+    <h3>Write a News Story</h3>
+    <p>Write a news story about an expedition. Answer <em>Who, What, When, Where, Why, and How</em>:</p>
+    <textarea placeholder="Dateline Arctic, 1909..."></textarea>
+  </section>
+
+  <!-- PAGE 7: CHECK YOUR MASTERY -->
+  <section class="page-view" id="p7">
+    <div class="page-header">
+      <h2>Page 12: Check Your Mastery</h2>
+      <p>Complete this final quiz to measure your understanding of the 15 nouns.</p>
+    </div>
+
+    <div id="mastery-banner" class="score-alert"></div>
+
+    <form id="mastery-form">
+      <div class="q-item">
+        <div class="q-text">1. Which item below would be a nuisance?</div>
+        <label><input type="radio" name="mq1" value="A"> A) An adult who repairs your bike</label><br>
+        <label><input type="radio" name="mq1" value="B"> B) A friend playing a game with you</label><br>
+        <label><input type="radio" name="mq1" value="C"> C) A fly buzzing around your head</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">2. What might be an obstacle for you if you work as a babysitter?</div>
+        <label><input type="radio" name="mq2" value="A"> A) The baby cries a lot</label><br>
+        <label><input type="radio" name="mq2" value="B"> B) You know and like the parents</label><br>
+        <label><input type="radio" name="mq2" value="C"> C) The parents will only hire someone over 16</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">3. What precaution should you take before sitting in the sun?</div>
+        <label><input type="radio" name="mq3" value="A"> A) Wear sunscreen</label><br>
+        <label><input type="radio" name="mq3" value="B"> B) Bring a radio</label><br>
+        <label><input type="radio" name="mq3" value="C"> C) Ask a friend along</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">4. A detective might ask a suspect questions in pursuit of what?</div>
+        <label><input type="radio" name="mq4" value="A"> A) A better job</label><br>
+        <label><input type="radio" name="mq4" value="B"> B) A friend</label><br>
+        <label><input type="radio" name="mq4" value="C"> C) The truth</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">5. What would be a challenge for a professional bike racer?</div>
+        <label><input type="radio" name="mq5" value="A"> A) Breaking a speed record</label><br>
+        <label><input type="radio" name="mq5" value="B"> B) Riding a short distance</label><br>
+        <label><input type="radio" name="mq5" value="C"> C) Learning how to shift gears</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">6. If you made a flat base with brick or concrete, what are you most likely building?</div>
+        <input type="text" id="mq6" placeholder="Type vocabulary noun...">
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">7. If you decided to rake leaves to make extra money, what would your mother call your plan?</div>
+        <input type="text" id="mq7" placeholder="Type vocabulary noun...">
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">8. If you wanted someone to sell your house, who could you hire?</div>
+        <input type="text" id="mq8" placeholder="Type vocabulary noun...">
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">9. If your car broke, who would you call to repair it?</div>
+        <input type="text" id="mq9" placeholder="Type vocabulary noun...">
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">10. If you study hard, get a lot of sleep, and eat a good breakfast, what are you giving yourself?</div>
+        <input type="text" id="mq10" placeholder="Type vocabulary noun...">
+      </div>
+
+      <button type="button" class="btn btn-success" onclick="scoreMastery()">Grade My Mastery Test</button>
+    </form>
+  </section>
+
+  <!-- Footer Pagination -->
+  <div class="footer-nav">
+    <button class="btn btn-outline" id="prev-btn" onclick="prevPage()">← Previous Page</button>
+    <span id="page-indicator" style="font-weight: 600; color: #64748b;">Page 1 of 7</span>
+    <button class="btn btn-outline" id="next-btn" onclick="nextPage()">Next Page →</button>
+  </div>
+</div>
+
+<script>
+  let currentPage = 1;
+  const totalPages = 7;
+
+  function switchPage(pageIndex) {
+    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    
+    document.getElementById(`p${pageIndex}`).classList.add('active');
+    document.querySelectorAll('.tab-btn')[pageIndex - 1].classList.add('active');
+    currentPage = pageIndex;
+    
+    document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prev-btn').disabled = currentPage === 1;
+    document.getElementById('next-btn').disabled = currentPage === totalPages;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevPage() { if (currentPage > 1) switchPage(currentPage - 1); }
+  function nextPage() { if (currentPage < totalPages) switchPage(currentPage + 1); }
+
+  // Page 1 Definition Card
+  function showDef(word, text) {
+    const card = document.getElementById('def-display');
+    document.getElementById('def-word').textContent = word;
+    document.getElementById('def-body').textContent = text;
+    card.style.display = 'block';
+  }
+
+  // Page 2 Acrostic Logic
+  function checkAcrostic(input) {
+    const isCorrect = input.value.trim().toLowerCase() === input.dataset.ans;
+    const tile = document.getElementById(`tile-${input.dataset.tile}`);
+    if (isCorrect) {
+      input.className = 'correct';
+      tile.textContent = input.dataset.char;
+      tile.style.background = '#86efac';
+    } else {
+      input.className = input.value.length > 0 ? 'incorrect' : '';
+      tile.textContent = '?';
+      tile.style.background = 'white';
+    }
+  }
+
+  function checkMysteryWord(input) {
+    const feed = document.getElementById('final-feedback');
+    if (input.value.trim().toLowerCase() === 'advantage') {
+      feed.textContent = " Correct! The mystery word is ADVANTAGE.";
+      feed.className = 'feedback correct';
+    } else {
+      feed.textContent = "";
+    }
+  }
+
+  // Page 3 Multiple Choice & Cloze
+  function checkSelect(sel, ans) {
+    sel.className = sel.value === ans ? 'correct' : 'incorrect';
+  }
+  function checkInline(inp, ans) {
+    const val = inp.value.trim().toLowerCase();
+    inp.className = val === ans ? 'correct' : (val.length > 0 ? 'incorrect' : '');
+  }
+
+  // Page 4 Word Counter
+  const vocabList = ["advantage","agent","challenge","foundation","genius","mainland","mechanic","nuisance","obstacle","precaution","pursuit","rival","scheme","target","vehicle"];
+  function trackVocabWords() {
+    const text = document.getElementById('rescue-note').value.toLowerCase();
+    let count = 0;
+    vocabList.forEach(w => { if (text.includes(w)) count++; });
+    document.getElementById('used-count').textContent = count;
+  }
+
+  // Page 5 Drag & Drop Categorization
+  function allowDrop(ev) { ev.preventDefault(); ev.currentTarget.classList.add('over'); }
+  function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+  function handleDrop(ev) {
+    ev.preventDefault();
+    ev.currentTarget.classList.remove('over');
+    const id = ev.dataTransfer.getData("text");
+    const elem = document.getElementById(id);
+    if (ev.currentTarget.classList.contains('cat-dropzone') || ev.currentTarget.id === 'pool') {
+      ev.currentTarget.appendChild(elem);
+    }
+  }
+
+  function checkCategories() {
+    let score = 0;
+    ['people', 'places', 'things'].forEach(cat => {
+      const zone = document.getElementById(cat);
+      zone.querySelectorAll('.chip').forEach(chip => {
+        const allowed = chip.dataset.cat.split(',');
+        if (allowed.includes(cat)) {
+          chip.style.background = '#16a34a';
+          score++;
+        } else {
+          chip.style.background = '#dc2626';
+        }
+      });
+    });
+    document.getElementById('cat-feedback').textContent = `Correctly sorted: ${score} / 15`;
+  }
+
+  // Page 6 Plural Verification
+  function checkPlural(input) {
+    const expected = input.dataset.plural;
+    const isCorrect = input.value.trim().toLowerCase() === expected;
+    input.className = isCorrect ? 'correct' : (input.value.length > 0 ? 'incorrect' : '');
+  }
+
+  // Page 7 Mastery Grading
+  function scoreMastery() {
+    const answerKey = {
+      mq1: 'C', mq2: 'C', mq3: 'A', mq4: 'C', mq5: 'A',
+      mq6: 'foundation', mq7: 'scheme', mq8: 'agent', mq9: 'mechanic', mq10: 'advantage'
+    };
+    let correct = 0;
+    
+    // Check radio buttons (1-5)
+    for (let i = 1; i <= 5; i++) {
+      const picked = document.querySelector(`input[name="mq${i}"]:checked`);
+      if (picked && picked.value === answerKey[`mq${i}`]) {
+        correct++;
+      }
+    }
+
+    // Check fill-in-the-blanks (6-10)
+    for (let i = 6; i <= 10; i++) {
+      const val = document.getElementById(`mq${i}`).value.trim().toLowerCase();
+      if (val === answerKey[`mq${i}`]) {
+        correct++;
+        document.getElementById(`mq${i}`).className = 'correct';
+      } else {
+        document.getElementById(`mq${i}`).className = 'incorrect';
+      }
+    }
+
+    const pct = Math.round((correct / 10) * 100);
+    const banner = document.getElementById('mastery-banner');
+    banner.style.display = 'block';
+    banner.textContent = `You scored ${correct} / 10 (${pct}%)!`;
+    banner.style.background = pct >= 80 ? '#dcfce7' : '#fee2e2';
+    banner.style.color = pct >= 80 ? '#15803d' : '#b91c1c';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

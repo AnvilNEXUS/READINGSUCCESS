@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 2: Verbs to Know</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --success: #16a34a;
+      --error: #dc2626;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+    .container { max-width: 860px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); overflow: hidden; }
+    
+    /* Navigation Bar */
+    header { background: #1e3a8a; color: white; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.25rem; font-weight: 700; }
+    .pagination { display: flex; flex-wrap: wrap; gap: 6px; background: #f1f5f9; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+    .page-btn { border: 1px solid var(--border); background: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; color: var(--text); }
+    .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    
+    /* Content Views */
+    .page-view { display: none; padding: 28px; }
+    .page-view.active { display: block; }
+    h2 { font-size: 1.35rem; color: #1e3a8a; margin-bottom: 8px; }
+    .instructions { background: #eff6ff; border-left: 4px solid var(--primary); padding: 10px 14px; margin-bottom: 20px; font-size: 0.95rem; }
+    
+    /* Vocabulary Box */
+    .vocab-chip-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); }
+    .vocab-chip { background: white; border: 1px solid #cbd5e1; border-radius: 16px; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .vocab-chip:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Interactive Elements */
+    .story-text p { margin-bottom: 14px; text-align: justify; }
+    .vocab-target { color: var(--primary-dark); font-weight: 600; background: #dbeafe; padding: 2px 5px; border-radius: 4px; cursor: help; }
+    .q-block { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9; }
+    .q-block:last-child { border-bottom: none; }
+    select, input[type="text"], textarea { padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; margin: 4px; }
+    select:focus, input[type="text"]:focus, textarea:focus { outline: 2px solid var(--primary); border-color: transparent; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .opt-label { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; font-size: 0.9rem; }
+    .opt-label:hover { background: #eff6ff; }
+    
+    /* Buttons & Feedback */
+    .action-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .btn { background: var(--primary); color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #64748b; }
+    .btn-secondary:hover { background: #475569; }
+    .feedback-box { margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-weight: 600; display: none; }
+    .feedback-box.correct { background: #dcfce7; color: var(--success); display: block; }
+    .feedback-box.partial { background: #fee2e2; color: var(--error); display: block; }
+    .tip-box { background: #fef3c7; border-left: 4px solid var(--accent); padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Grade 5: Lesson 2 — Verbs to Know</h1>
+    <div id="unitScore">Progress: Step 1 / 7</div>
+  </header>
+
+  <nav class="pagination">
+    <button class="page-btn active" onclick="showPage(1)">1. Story</button>
+    <button class="page-btn" onclick="showPage(2)">2. Meanings (1-10)</button>
+    <button class="page-btn" onclick="showPage(3)">3. Definitions (11-18)</button>
+    <button class="page-btn" onclick="showPage(4)">4. Context Cloze</button>
+    <button class="page-btn" onclick="showPage(5)">5. Word Actions</button>
+    <button class="page-btn" onclick="showPage(6)">6. Verb Tenses</button>
+    <button class="page-btn" onclick="showPage(7)">7. Mastery Test</button>
+  </nav>
+
+  <!-- PAGE 1: STORY -->
+  <div id="page1" class="page-view active">
+    <h2>Read Words in Context</h2>
+    <div class="instructions">Read the story below. Hover over or tap the highlighted verbs to see context notes.</div>
+    <div class="story-text">
+      <h3>The Farmer and the Wise Woman</h3><br>
+      <p>Once upon a time, there was a farmer who could not <span class="vocab-target" title="focus attention">concentrate</span> because his house was so noisy. He asked many people what to do. They told him to <span class="vocab-target" title="ask advice from">consult</span> the Wise Woman to ask her advice.</p>
+      <p>"Since so many people have <span class="vocab-target" title="directed to someone">referred</span> me to her, I'm sure she can help," he thought, as he set out for her house.</p>
+      <p>"I have a problem," the farmer said when he met the Wise Woman. "I am annoyed and <span class="vocab-target" title="bothered">irritated</span> because my house is very small and we have so many noisy children."</p>
+      <p>The Wise Woman said, "<span class="vocab-target" title="persuade gently">Coax</span> your horse to come inside your house by talking to it in a pleasant and gentle way." The farmer thought this an odd suggestion, but he did as he was told.</p>
+      <p>The next day, the farmer returned to the Wise Woman. He was very angry. "I <span class="vocab-target" title="refuse to accept">reject</span> your advice! It didn't help me!" he yelled. "I can't <span class="vocab-target" title="succeed in doing">manage</span> to get anything done. The children are as noisy as ever, and now the horse <span class="vocab-target" title="knocks over">topples</span> the furniture and dishes. It makes them fall over and break."</p>
+      <p>The Wise Woman said, "Load your brother's cows on your truck and <span class="vocab-target" title="carry from one place to another">transport</span> them to your house. Bring them inside." Even though he was angry, the farmer decided to do as he was told. This <span class="vocab-target" title="lifted or raised">boosted</span> the noise to an even higher level! The farmer <span class="vocab-target" title="gave all effort to">devoted</span> all day to chasing the animals and his children. The animals <span class="vocab-target" title="gathered together">assembled</span> all over the house, gathering in groups. After weeks of this, the farmer grew very tired. He <span class="vocab-target" title="lost strength">weakened</span> and lay down to rest.</p>
+      <p>When he was rested, he went back to the Wise Woman's house. "Now," she advised, "take all the animals outside." The farmer did as she said. A day later, he came back.</p>
+      <p>"I <span class="vocab-target" title="say sorry">apologize</span>," he said. "I am sorry. My house is back to normal and now it seems peaceful. You have <span class="vocab-target" title="shown / uncovered">revealed</span> to me a truth about life. People should learn to be content with their lives."</p>
+    </div>
+    <div class="tip-box">
+      <strong>Word Learning Tip:</strong> A verb shows action or feelings. Use surrounding sentences (context clues) to decode unknown verbs.
+    </div>
+    <div class="action-bar">
+      <span></span>
+      <button class="btn" onclick="showPage(2)">Continue to Matching &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: MATCHING 1-10 -->
+  <div id="page2" class="page-view">
+    <h2>Connect Words and Meanings</h2>
+    <div class="instructions">Select the letter of the matching definition for each vocabulary verb.</div>
+    <div id="matchingList"></div>
+    <div id="feedback2" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(1)">&larr; Back</button>
+      <button class="btn" onclick="checkPage2()">Check Answers</button>
+      <button class="btn" onclick="showPage(3)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: MC DEFINITIONS 11-18 -->
+  <div id="page3" class="page-view">
+    <h2>Connect More Words and Meanings</h2>
+    <div class="instructions">Select the word that matches each definition.</div>
+    <div id="mcList"></div>
+    <div id="feedback3" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(2)">&larr; Back</button>
+      <button class="btn" onclick="checkPage3()">Check Answers</button>
+      <button class="btn" onclick="showPage(4)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: JOURNAL CLOZE -->
+  <div id="page4" class="page-view">
+    <h2>Use Words in Context</h2>
+    <div class="instructions">Complete the Wise Woman's journal by selecting the correct verb for each blank.</div>
+    <div style="background:#fffbeb; padding:16px; border-radius:8px; border:1px solid #fde68a; line-height:2.2;">
+      Dear Journal,<br>
+      Every day, I (1) 
+      <select id="cloze1"><option value="">--choose--</option><option value="consult">consult</option><option value="boost">boost</option><option value="transport">transport</option></select>
+      with people, giving them advice and helping them solve their problems. A few days ago, a farmer came to see me. He told me that the noise and activity in his small house (2) 
+      <select id="cloze2"><option value="">--choose--</option><option value="apologized">apologized</option><option value="devoted">devoted</option><option value="irritated">irritated</option></select>
+      him. He could not (3) 
+      <select id="cloze3"><option value="">--choose--</option><option value="assemble">assemble</option><option value="reject">reject</option><option value="concentrate">concentrate</option></select>
+      or focus on his chores. As a result, he could not (4) 
+      <select id="cloze4"><option value="">--choose--</option><option value="manage">manage</option><option value="coax">coax</option><option value="topple">topple</option></select>
+      to get much done. He needed to (5) 
+      <select id="cloze5"><option value="">--choose--</option><option value="devote">devote</option><option value="weaken">weaken</option><option value="consult">consult</option></select>
+      more time to his work and spend less effort trying to keep everyone quiet.<br>
+      I had a plan to help him, but I did not (6) 
+      <select id="cloze6"><option value="">--choose--</option><option value="refer">refer</option><option value="reveal">reveal</option><option value="irritate">irritate</option></select>
+      its purpose to him. I (7) 
+      <select id="cloze7"><option value="">--choose--</option><option value="coaxed">coaxed</option><option value="concentrated">concentrated</option><option value="managed">managed</option></select>
+      him into bringing a horse and some cows into his house. I asked him in a pleasant way, because who would want all those noisy animals inside? Once all the animals were (8) 
+      <select id="cloze8"><option value="">--choose--</option><option value="revealed">revealed</option><option value="weakened">weakened</option><option value="assembled">assembled</option></select>
+      or gathered inside, what a racket they made! I still laugh when I think about it. The animals ran around bumping into things. They (9) 
+      <select id="cloze9"><option value="">--choose--</option><option value="irritated">irritated</option><option value="managed">managed</option><option value="toppled">toppled</option></select>
+      the dishes and furniture. If the farmer thought he had trouble before, now he could see what real trouble was like.<br>
+      Tomorrow, I will tell him to take the animals back outside. The house will seem so quiet. I think he will (10) 
+      <select id="cloze10"><option value="">--choose--</option><option value="coax">coax</option><option value="boost">boost</option><option value="apologize">apologize</option></select>
+      to me, telling me he is sorry that he doubted my wisdom.
+    </div>
+    <div id="feedback4" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(3)">&larr; Back</button>
+      <button class="btn" onclick="checkPage4()">Check Answers</button>
+      <button class="btn" onclick="showPage(5)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: CAPTIONS / ACTIONS -->
+  <div id="page5" class="page-view">
+    <h2>Put Words Into Action</h2>
+    <div class="instructions">Fill in the blank in each caption with the correct vocabulary word.</div>
+    <div class="vocab-chip-container">
+      <span class="vocab-chip">apologize</span><span class="vocab-chip">assemble</span><span class="vocab-chip">boost</span>
+      <span class="vocab-chip">coax</span><span class="vocab-chip">concentrate</span><span class="vocab-chip">consult</span>
+      <span class="vocab-chip">devote</span><span class="vocab-chip">irritate</span><span class="vocab-chip">manage</span>
+      <span class="vocab-chip">refer</span><span class="vocab-chip">reject</span><span class="vocab-chip">reveal</span>
+      <span class="vocab-chip">topple</span><span class="vocab-chip">transport</span><span class="vocab-chip">weaken</span>
+    </div>
+    <div class="q-block">
+      1. Look at the farmer speak gently to the animals and <input type="text" id="act1" style="width:140px;"> them into the house!
+    </div>
+    <div class="q-block">
+      2. The animals <input type="text" id="act2" style="width:140px;"> in the kitchen in a big group.
+    </div>
+    <div class="q-block">
+      3. The mess and noise <input type="text" id="act3" style="width:140px;"> the farmer's family and everyone gets annoyed.
+    </div>
+    <div class="q-block">
+      4. Uh, oh! The furniture will <input type="text" id="act4" style="width:140px;"> down and fall on the floor!
+    </div>
+    <div class="q-block">
+      5. The farmer will <input type="text" id="act5" style="width:140px;"> to the Wise Woman and say that he is sorry.
+    </div>
+    <div class="q-block">
+      6. The Wise Woman will <input type="text" id="act6" style="width:140px;"> the secret behind her plan.
+    </div>
+    <div id="feedback5" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(4)">&larr; Back</button>
+      <button class="btn" onclick="checkPage5()">Check Answers</button>
+      <button class="btn" onclick="showPage(6)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6: TENSES -->
+  <div id="page6" class="page-view">
+    <h2>Review and Extend: Verb Tenses</h2>
+    <div class="tip-box">
+      <strong>Tense Chart:</strong><br>
+      • Present (happening now): add <em>-s</em> (He talks)<br>
+      • Past (already happened): add <em>-d</em> or <em>-ed</em> (He talked)<br>
+      • Ongoing (still happening): add <em>-ing</em> (He is talking)
+    </div>
+    <div class="instructions">Type the correct tense of the missing vocabulary verb for each blank.</div>
+    <div class="q-block">
+      1. The fifth graders are really working hard and spend most of their time helping animals. They are <input type="text" id="tense1" style="width:150px;"> time to this activity.
+    </div>
+    <div class="q-block">
+      2. This year, they are focusing on learning about farming. Today, they are <input type="text" id="tense2" style="width:150px;"> on farm animals and crops.
+    </div>
+    <div class="q-block">
+      3. Yesterday, the principal met with farmers to learn about crops. He <input type="text" id="tense3" style="width:150px;"> with the farmers.
+    </div>
+    <div class="q-block">
+      4. The principal has arranged to get farmers to come to school to talk with students. She <input type="text" id="tense4" style="width:150px;"> to get five speakers to come.
+    </div>
+    <div class="q-block">
+      5. Holding this meeting at school is easier than moving five classes of students! This way the principal would not be <input type="text" id="tense5" style="width:150px;"> 120 students.
+    </div>
+    <div id="feedback6" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(5)">&larr; Back</button>
+      <button class="btn" onclick="checkPage6()">Check Answers</button>
+      <button class="btn" onclick="showPage(7)">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 7: MASTERY -->
+  <div id="page7" class="page-view">
+    <h2>Check Your Mastery</h2>
+    <div class="instructions">Answer questions 1–10 to demonstrate unit mastery.</div>
+    
+    <div class="q-block">
+      1. When you put together the pieces of a model car, bookcase, or table, you 
+      <select id="mast1"><option value="">--choose--</option><option value="boost">boost</option><option value="transport">transport</option><option value="assemble">assemble</option></select> it.
+    </div>
+    <div class="q-block">
+      2. If you have poison ivy and you scratch it, you will probably 
+      <select id="mast2"><option value="">--choose--</option><option value="irritate">irritate</option><option value="topple">topple</option><option value="manage">manage</option></select> it.
+    </div>
+    <div class="q-block">
+      3. When raccoons chew on a tree, they 
+      <select id="mast3"><option value="">--choose--</option><option value="weaken">weaken</option><option value="boost">boost</option><option value="reveal">reveal</option></select> the inner core and the tree falls down.
+    </div>
+    <div class="q-block">
+      4. People who enjoy their hobbies often 
+      <select id="mast4"><option value="">--choose--</option><option value="coax">coax</option><option value="devote">devote</option><option value="refer">refer</option></select> a lot of time to them.
+    </div>
+    <div class="q-block">
+      5. Because Raul was reading a good book, he did not 
+      <select id="mast5"><option value="">--choose--</option><option value="reject">reject</option><option value="concentrate">concentrate</option><option value="consult">consult</option></select> on the TV show.
+    </div>
+
+    <div class="q-block" id="mastMC6">
+      <p>6. Which of the following actions might make someone apologize?</p>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="m6" value="A"> A. eating a salad</label>
+        <label class="opt-label"><input type="radio" name="m6" value="B"> B. walking to school</label>
+        <label class="opt-label"><input type="radio" name="m6" value="C"> C. stepping on someone's toes</label>
+        <label class="opt-label"><input type="radio" name="m6" value="D"> D. writing an A+ report</label>
+      </div>
+    </div>
+    <div class="q-block" id="mastMC7">
+      <p>7. Which of the following would be the easiest for you to transport?</p>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="m7" value="A"> A. time</label>
+        <label class="opt-label"><input type="radio" name="m7" value="B"> B. food</label>
+        <label class="opt-label"><input type="radio" name="m7" value="C"> C. rain</label>
+        <label class="opt-label"><input type="radio" name="m7" value="D"> D. hope</label>
+      </div>
+    </div>
+    <div class="q-block" id="mastMC8">
+      <p>8. Which of the following would most likely topple?</p>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="m8" value="A"> A. foundation of a house</label>
+        <label class="opt-label"><input type="radio" name="m8" value="B"> B. a tower of blocks</label>
+        <label class="opt-label"><input type="radio" name="m8" value="C"> C. money</label>
+        <label class="opt-label"><input type="radio" name="m8" value="D"> D. ducks</label>
+      </div>
+    </div>
+    <div class="q-block" id="mastMC9">
+      <p>9. Whom would you most likely consult if you were ill?</p>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="m9" value="A"> A. a doctor</label>
+        <label class="opt-label"><input type="radio" name="m9" value="B"> B. a teacher</label>
+        <label class="opt-label"><input type="radio" name="m9" value="C"> C. a lawyer</label>
+        <label class="opt-label"><input type="radio" name="m9" value="D"> D. an athlete</label>
+      </div>
+    </div>
+    <div class="q-block" id="mastMC10">
+      <p>10. Which of the following would a banker manage?</p>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="m10" value="A"> A. liberty</label>
+        <label class="opt-label"><input type="radio" name="m10" value="B"> B. animals</label>
+        <label class="opt-label"><input type="radio" name="m10" value="C"> C. bakery goods</label>
+        <label class="opt-label"><input type="radio" name="m10" value="D"> D. money</label>
+      </div>
+    </div>
+
+    <div id="feedback7" class="feedback-box"></div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="showPage(6)">&larr; Back</button>
+      <button class="btn" onclick="checkPage7()">Submit Unit Test</button>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Page Navigation
+  function showPage(pageNumber) {
+    document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.page-btn').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById('page' + pageNumber).classList.add('active');
+    document.querySelectorAll('.page-btn')[pageNumber - 1].classList.add('active');
+    document.getElementById('unitScore').innerText = 'Step ' + pageNumber + ' / 7';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Page 2: Matching Setup
+  const page2Data = [
+    { word: "irritate", ans: "D", def: "D. to annoy or bother" },
+    { word: "weaken", ans: "G", def: "G. to lose strength" },
+    { word: "concentrate", ans: "E", def: "E. to focus on something" },
+    { word: "transport", ans: "I", def: "I. to move someone or something from one place to another" },
+    { word: "assemble", ans: "C", def: "C. to put together or gather in groups" },
+    { word: "boost", ans: "B", def: "B. to lift or increase" },
+    { word: "refer", ans: "F", def: "F. to tell someone to go to a certain person or place for help or info" },
+    { word: "manage", ans: "A", def: "A. to control or direct" },
+    { word: "consult", ans: "J", def: "J. to go to another person or resource for advice" },
+    { word: "topple", ans: "H", def: "H. to fall over or to make something fall over" }
+  ];
+
+  const matchingContainer = document.getElementById('matchingList');
+  page2Data.forEach((item, idx) => {
+    matchingContainer.innerHTML += `
+      <div class="q-block">
+        <strong>${idx + 1}. ${item.word}</strong> &nbsp;
+        <select id="match_${idx}">
+          <option value="">Select definition...</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information</option>
+        </select>
+      </div>`;
+  });
+
+  function checkPage2() {
+    let score = 0;
+    page2Data.forEach((item, idx) => {
+      const val = document.getElementById(`match_${idx}`).value;
+      if(val === item.ans) score++;
+    });
+    const fb = document.getElementById('feedback2');
+    fb.className = score === 10 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `You scored ${score} / 10 correct. ${score === 10 ? 'Excellent match!' : 'Check definitions and retry.'}`;
+  }
+
+  // Page 3: Multiple Choice Setup
+  const page3Data = [
+    { q: "11. to say you are sorry about something", opts: ["apologize", "consult", "devote", "weaken"], ans: "apologize" },
+    { q: "12. to refuse to accept something", opts: ["irritate", "reveal", "reject", "assemble"], ans: "reject" },
+    { q: "13. to persuade someone by asking in a pleasant and easy way; to urge", opts: ["boost", "coax", "transport", "manage"], ans: "coax" },
+    { q: "14. to give time and effort to some purpose", opts: ["devote", "topple", "reject", "refer"], ans: "devote" },
+    { q: "15. to show or make known; to uncover", opts: ["concentrate", "apologize", "reveal", "coax"], ans: "reveal" },
+    { q: "16. to annoy or bother", opts: ["coax", "irritate", "refer", "reject"], ans: "irritate" },
+    { q: "17. to make less strong", opts: ["reveal", "apologize", "boost", "weaken"], ans: "weaken" },
+    { q: "18. to bring together as a group", opts: ["consult", "manage", "assemble", "devote"], ans: "assemble" }
+  ];
+
+  const mcContainer = document.getElementById('mcList');
+  page3Data.forEach((item, idx) => {
+    let optHtml = item.opts.map(o => `
+      <label class="opt-label">
+        <input type="radio" name="mc_${idx}" value="${o}"> ${o}
+      </label>`).join('');
+    mcContainer.innerHTML += `<div class="q-block"><p><strong>${item.q}</strong></p><div class="options-grid">${optHtml}</div></div>`;
+  });
+
+  function checkPage3() {
+    let score = 0;
+    page3Data.forEach((item, idx) => {
+      const selected = document.querySelector(`input[name="mc_${idx}"]:checked`);
+      if (selected && selected.value === item.ans) score++;
+    });
+    const fb = document.getElementById('feedback3');
+    fb.className = score === 8 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `You scored ${score} / 8 correct. ${score === 8 ? 'Great job!' : 'Review definitions and try again.'}`;
+  }
+
+  // Page 4: Cloze Check
+  const p4Keys = {
+    cloze1: "consult", cloze2: "irritated", cloze3: "concentrate", cloze4: "manage", cloze5: "devote",
+    cloze6: "reveal", cloze7: "coaxed", cloze8: "assembled", cloze9: "toppled", cloze10: "apologize"
+  };
+
+  function checkPage4() {
+    let score = 0;
+    for (let key in p4Keys) {
+      if (document.getElementById(key).value === p4Keys[key]) score++;
+    }
+    const fb = document.getElementById('feedback4');
+    fb.className = score === 10 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `You scored ${score} / 10 correct in the Wise Woman's journal.`;
+  }
+
+  // Page 5: Captions Check
+  const p5Keys = { act1: "coax", act2: "assemble", act3: "irritate", act4: "topple", act5: "apologize", act6: "reveal" };
+  function checkPage5() {
+    let score = 0;
+    for (let key in p5Keys) {
+      if (document.getElementById(key).value.trim().toLowerCase() === p5Keys[key]) score++;
+    }
+    const fb = document.getElementById('feedback5');
+    fb.className = score === 6 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `You completed ${score} / 6 captions correctly.`;
+  }
+
+  // Page 6: Verb Tenses Check
+  const p6Keys = { tense1: "devoting", tense2: "concentrating", tense3: "consulted", tense4: "managed", tense5: "transporting" };
+  function checkPage6() {
+    let score = 0;
+    for (let key in p6Keys) {
+      if (document.getElementById(key).value.trim().toLowerCase() === p6Keys[key]) score++;
+    }
+    const fb = document.getElementById('feedback6');
+    fb.className = score === 5 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `You scored ${score} / 5 correct on verb tense endings.`;
+  }
+
+  // Page 7: Mastery Test Check
+  const p7FillKeys = { mast1: "assemble", mast2: "irritate", mast3: "weaken", mast4: "devote", mast5: "concentrate" };
+  const p7MCKeys = { m6: "C", m7: "B", m8: "B", m9: "A", m10: "D" };
+
+  function checkPage7() {
+    let score = 0;
+    for (let key in p7FillKeys) {
+      if (document.getElementById(key).value === p7FillKeys[key]) score++;
+    }
+    for (let key in p7MCKeys) {
+      const sel = document.querySelector(`input[name="${key}"]:checked`);
+      if (sel && sel.value === p7MCKeys[key]) score++;
+    }
+    const fb = document.getElementById('feedback7');
+    fb.className = score >= 8 ? 'feedback-box correct' : 'feedback-box partial';
+    fb.innerText = `Mastery Test: ${score} / 10 correct! ${score === 10 ? 'Perfect score on Lesson 2!' : 'Review missed items.'}`;
+  }
+</script>
+</body>
+</html>

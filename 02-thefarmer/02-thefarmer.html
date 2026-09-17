@@ -1,836 +1,1043 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lesson 2: The Farmer and the Wise Woman - Verbs to Know</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 2: Verbs to Know - Interactive Unit</title>
   <style>
     :root {
       --primary: #1e40af;
-      --primary-light: #3b82f6;
-      --primary-subtle: #eff6ff;
-      --success: #15803d;
+      --primary-light: #eff6ff;
+      --secondary: #0284c7;
+      --success: #16a34a;
       --success-bg: #dcfce7;
-      --error: #b91c1c;
-      --error-bg: #fee2e2;
-      --warning: #b45309;
-      --warning-bg: #fef3c7;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --bg: #f1f5f9;
-      --card-bg: #ffffff;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --neutral-light: #f8fafc;
       --border: #cbd5e1;
-      --radius: 10px;
+      --text: #1e293b;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 16px; line-height: 1.6; }
-    .container { max-width: 900px; margin: 0 auto; background: var(--card-bg); border-radius: var(--radius); box-shadow: 0 8px 30px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid var(--border); }
-
-    /* Top Bar */
-    header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
-    header h1 { font-size: 1.25rem; font-weight: 700; }
-    .unit-pill { background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
-
-    /* Nav Tabs */
-    nav.tabs { display: flex; flex-wrap: wrap; background: #e2e8f0; padding: 8px 12px; gap: 6px; border-bottom: 1px solid var(--border); }
-    .tab-btn { background: #ffffff; border: 1px solid var(--border); padding: 7px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
-    .tab-btn:hover { color: var(--primary); border-color: var(--primary-light); }
-    .tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
-
-    /* Page Panels */
-    .page-panel { display: none; padding: 24px 28px; }
-    .page-panel.active { display: block; animation: fadeIn 0.25s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-    .page-title { font-size: 1.35rem; color: #1e3a8a; margin-bottom: 6px; }
-    .instructions { background: var(--primary-subtle); border-left: 4px solid var(--primary-light); padding: 10px 14px; border-radius: 4px; font-size: 0.95rem; margin-bottom: 20px; color: #1e3a8a; }
-
-    /* Interactive Reader (Page 1) */
-    .story-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 22px; line-height: 1.85; font-size: 1.05rem; }
-    .story-card h3 { color: #1e3a8a; margin-bottom: 14px; text-align: center; }
-    .vocab-click { background: #e0e7ff; color: #1d4ed8; padding: 2px 6px; border-radius: 4px; font-weight: 600; cursor: pointer; border-bottom: 2px solid #3b82f6; transition: background 0.2s; }
-    .vocab-click:hover { background: #bfdbfe; }
-
-    /* Modal for Reader */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 16px; }
-    .modal-overlay.open { display: flex; }
-    .modal-box { background: white; max-width: 480px; width: 100%; border-radius: 12px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
-    .modal-close { position: absolute; top: 14px; right: 16px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--text-muted); }
-    .modal-word { font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin-bottom: 4px; text-transform: capitalize; }
-    .modal-pos { font-style: italic; color: #64748b; font-size: 0.9rem; margin-bottom: 12px; }
-    .modal-def { background: #f8fafc; border-left: 3px solid var(--primary); padding: 10px 12px; margin-bottom: 12px; border-radius: 4px; }
-    .modal-clue { font-size: 0.9rem; color: #334155; }
-
-    /* Forms & Instant Feedback Elements */
-    .item-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; transition: border-color 0.2s; }
-    .item-card.is-correct { border-color: var(--success); background: #f0fdf4; }
-    .item-card.is-incorrect { border-color: var(--error); background: #fef2f2; }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #e2e8f0; margin: 0; padding: 20px; color: var(--text); }
+    .unit-container { max-width: 950px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; }
+    header { background: #0f172a; color: white; padding: 20px 25px; }
+    header h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: 700; }
+    header p { margin: 0; color: #94a3b8; font-size: 14px; }
     
-    select, input[type="text"], textarea { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; outline: none; transition: all 0.2s; }
-    select:focus, input[type="text"]:focus, textarea:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
-    .live-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; margin-left: 8px; }
-    .live-badge.valid { background: var(--success-bg); color: var(--success); }
-    .live-badge.invalid { background: var(--error-bg); color: var(--error); }
+    /* Navigation Bar */
+    .tab-bar { display: flex; background: #1e293b; overflow-x: auto; border-bottom: 2px solid #334155; }
+    .tab-btn { flex: 1; padding: 12px 10px; border: none; background: transparent; color: #cbd5e1; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; white-space: nowrap; transition: 0.2s; }
+    .tab-btn:hover { background: #334155; color: white; }
+    .tab-btn.active { background: var(--primary); color: white; border-bottom: 3px solid #60a5fa; }
+    
+    /* Content Layout */
+    .page-view { display: none; padding: 30px; }
+    .page-view.active { display: block; }
+    .page-header { border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px; }
+    .page-header h2 { margin: 0 0 6px 0; color: var(--primary); font-size: 20px; }
+    .page-header p { margin: 0; color: #64748b; font-size: 14px; }
+    
+    .word-bank { display: flex; flex-wrap: wrap; gap: 8px; background: var(--primary-light); border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 14px; font-weight: 600; color: var(--primary); }
+    .tip-box { background: #fefce8; border-left: 4px solid #ca8a04; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 13.5px; line-height: 1.5; }
+    
+    /* Interactive Reading (Page 1) */
+    .story-text { line-height: 1.8; font-size: 16px; background: var(--neutral-light); padding: 22px; border-radius: 8px; border: 1px solid var(--border); }
+    .vocab-target { background: #fef08a; padding: 1px 6px; border-radius: 4px; cursor: pointer; font-weight: 600; color: #854d0e; text-decoration: underline dotted; }
+    .vocab-target:hover { background: #fde047; }
+    .def-card { margin-top: 15px; padding: 15px; background: #e0f2fe; border: 1px solid #7dd3fc; border-radius: 8px; display: none; }
+    
+    /* Inputs & Quizzes */
+    .q-item { margin-bottom: 18px; padding: 14px; background: var(--neutral-light); border-radius: 8px; border: 1px solid #e2e8f0; }
+    .q-text { font-weight: 600; margin-bottom: 10px; font-size: 14.5px; }
+    input[type="text"], select, textarea { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 14px; width: 100%; max-width: 400px; box-sizing: border-box; }
+    textarea { max-width: 100%; resize: vertical; min-height: 90px; }
+    input.correct, select.correct { border-color: var(--success) !important; background: var(--success-bg) !important; }
+    input.incorrect, select.incorrect { border-color: var(--danger) !important; background: var(--danger-bg) !important; }
+    .feedback { font-size: 12.5px; font-weight: bold; margin-top: 5px; }
+    .feedback.correct { color: var(--success); }
+    .feedback.incorrect { color: var(--danger); }
 
-    /* Multi Choice Buttons */
-    .mc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-top: 10px; }
-    .mc-btn { background: #f8fafc; border: 1px solid var(--border); padding: 10px 14px; border-radius: 6px; cursor: pointer; text-align: left; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
-    .mc-btn:hover { background: #eff6ff; border-color: var(--primary-light); }
-    .mc-btn.correct { background: var(--success-bg) !important; border-color: var(--success) !important; color: var(--success) !important; font-weight: 700; }
-    .mc-btn.incorrect { background: var(--error-bg) !important; border-color: var(--error) !important; color: var(--error) !important; }
-
-    /* Live Vocabulary Chips Tracker */
-    .tracker-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-top: 16px; }
-    .tracker-title { font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 8px; }
-    .chips-wrapper { display: flex; flex-wrap: wrap; gap: 6px; }
-    .vocab-tracker-chip { background: white; border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: #64748b; transition: all 0.2s; }
-    .vocab-tracker-chip.used { background: var(--success); color: white; border-color: var(--success); transform: scale(1.05); }
+    /* Small Hint Button & Hidden Container */
+    .btn-hint { background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 4px 10px; font-size: 12px; font-weight: 600; border-radius: 4px; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s; }
+    .btn-hint:hover { background: #e2e8f0; color: #1e293b; }
+    .hint-card { display: none; margin-top: 8px; padding: 10px 12px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; font-size: 13px; color: #92400e; }
 
     /* Billboard Studio (Page 3) */
-    .billboard-container { background: #0f172a; border-radius: 12px; padding: 24px; color: white; text-align: center; margin-top: 16px; min-height: 140px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .bb-word { font-size: 2.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
-    .bb-slogan { font-size: 1.1rem; color: #facc15; margin-top: 6px; font-style: italic; }
+    .billboard-box { background: #0f172a; color: white; border-radius: 8px; padding: 25px; text-align: center; margin-top: 15px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .billboard-word { font-size: 32px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+    .billboard-slogan { font-size: 15px; color: #facc15; margin-top: 8px; font-style: italic; }
 
-    /* Score Banners */
-    .score-banner { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-    .action-row { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
-    .btn { background: var(--primary); color: white; border: none; padding: 9px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; }
-    .btn:hover { background: #1d4ed8; }
-    .btn-secondary { background: #64748b; }
-    .btn-secondary:hover { background: #475569; }
+    /* Bottom Actions & Controls */
+    .footer-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: #f1f5f9; border-top: 1px solid var(--border); }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-outline { background: white; border: 1px solid var(--border); color: #334155; }
+    .btn-outline:hover { background: #f8fafc; }
+    .score-alert { padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 700; margin-bottom: 20px; display: none; }
 
-    /* Page 7 Report Table */
-    .report-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.95rem; }
-    .report-table th, .report-table td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
-    .report-table th { background: #f1f5f9; font-weight: 600; }
-    .grade-badge { font-size: 2.2rem; font-weight: 800; color: #1e3a8a; text-align: center; margin: 12px 0; }
+    /* Mastery Table */
+    .diagnostic-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13.5px; }
+    .diagnostic-table th, .diagnostic-table td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
+    .diagnostic-table th { background: #f1f5f9; color: #475569; }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="unit-container">
   <header>
-    <h1>Lesson 2: Verbs to Know</h1>
-    <span class="unit-pill" id="pageIndicator">Page 1 / 7</span>
+    <h1>Chapter 1: Context Clues</h1>
+    <p>Lesson 2: Verbs to Know (Grade 5)</p>
   </header>
 
-  <nav class="tabs">
-    <button class="tab-btn active" onclick="switchPage(1)">1. Interactive Reader</button>
-    <button class="tab-btn" onclick="switchPage(2)">2. Live Match (1–10)</button>
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchPage(1)">1. Read Context</button>
+    <button class="tab-btn" onclick="switchPage(2)">2. Connect Meanings</button>
     <button class="tab-btn" onclick="switchPage(3)">3. Definitions & Studio</button>
-    <button class="tab-btn" onclick="switchPage(4)">4. Journal Cloze & Writing</button>
-    <button class="tab-btn" onclick="switchPage(5)">5. Put Words in Action</button>
+    <button class="tab-btn" onclick="switchPage(4)">4. Context Cloze</button>
+    <button class="tab-btn" onclick="switchPage(5)">5. Words in Action</button>
     <button class="tab-btn" onclick="switchPage(6)">6. Verb Tense Drill</button>
-    <button class="tab-btn" onclick="switchPage(7)">7. Mastery Engine</button>
+    <button class="tab-btn" onclick="switchPage(7)">7. Check Mastery</button>
   </nav>
 
-  <!-- PAGE 1: INTERACTIVE STORY READER -->
-  <section id="panel1" class="page-panel active">
-    <h2 class="page-title">Read Words in Context</h2>
-    <div class="instructions">Click any highlighted verb in the passage below to reveal its exact meaning and context clue analysis.</div>
-    
-    <div class="story-card">
+  <!-- PAGE 1: READ WORDS IN CONTEXT -->
+  <section class="page-view active" id="p1">
+    <div class="page-header">
+      <h2>Page 13: Read Words in Context</h2>
+      <p>Click any highlighted vocabulary verb to inspect its definition and context clues.</p>
+    </div>
+
+    <div class="tip-box">
+      <strong>Word Learning Tip:</strong> A verb is a word that shows actions or feelings. Often, a verb comes right after a noun or pronoun. Sometimes a verb ends in <em>-s</em>, <em>-ed</em>, or <em>-ing</em>. A verb may have a helping word in front of it such as <em>may</em>, <em>can</em>, <em>will</em>, <em>shall</em>, <em>must</em>, <em>could</em>, or <em>would</em>.
+    </div>
+
+    <div class="story-text">
       <h3>The Farmer and the Wise Woman</h3>
-      <p>Once upon a time, there was a farmer who could not <span class="vocab-click" onclick="showWordModal('concentrate')">concentrate</span> because his house was so noisy. He asked many people what to do. They told him to <span class="vocab-click" onclick="showWordModal('consult')">consult</span> the Wise Woman to ask her advice.</p><br>
-      <p>"Since so many people have <span class="vocab-click" onclick="showWordModal('refer')">referred</span> me to her, I'm sure she can help," he thought, as he set out for her house.</p><br>
-      <p>"I have a problem," the farmer said when he met the Wise Woman. "I am annoyed and <span class="vocab-click" onclick="showWordModal('irritate')">irritated</span> because my house is very small and we have so many noisy children."</p><br>
-      <p>The Wise Woman said, "<span class="vocab-click" onclick="showWordModal('coax')">Coax</span> your horse to come inside your house by talking to it in a pleasant and gentle way." The farmer thought this an odd suggestion, but he did as he was told.</p><br>
-      <p>The next day, the farmer returned to the Wise Woman. He was very angry. "I <span class="vocab-click" onclick="showWordModal('reject')">reject</span> your advice! It didn't help me!" he yelled. "I can't <span class="vocab-click" onclick="showWordModal('manage')">manage</span> to get anything done. The children are as noisy as ever, and now the horse <span class="vocab-click" onclick="showWordModal('topple')">topples</span> the furniture and dishes. It makes them fall over and break."</p><br>
-      <p>The Wise Woman said, "Load your brother's cows on your truck and <span class="vocab-click" onclick="showWordModal('transport')">transport</span> them to your house. Bring them inside." Even though he was angry, the farmer decided to do as he was told. This <span class="vocab-click" onclick="showWordModal('boost')">boosted</span> the noise to an even higher level! The farmer <span class="vocab-click" onclick="showWordModal('devote')">devoted</span> all day to chasing the animals and his children. The animals <span class="vocab-click" onclick="showWordModal('assemble')">assembled</span> all over the house, gathering in groups. After weeks of this, the farmer grew very tired. He <span class="vocab-click" onclick="showWordModal('weaken')">weakened</span> and lay down to rest.</p><br>
-      <p>When he was rested, he went back to the Wise Woman's house. "Now," she advised, "take all the animals outside." The farmer did as she said. A day later, he came back.</p><br>
-      <p>"I <span class="vocab-click" onclick="showWordModal('apologize')">apologize</span>," he said. "I am sorry. My house is back to normal and now it seems peaceful. You have <span class="vocab-click" onclick="showWordModal('reveal')">revealed</span> to me a truth about life. People should learn to be content with their lives."</p>
+      <p>Once upon a time, there was a farmer who could not <span class="vocab-target" onclick="showDef('concentrate', 'verb: to focus all your attention or thoughts on something')">concentrate</span> because his house was so noisy. He asked many people what to do. They told him to <span class="vocab-target" onclick="showDef('consult', 'verb: to go to another person or resource for advice or information')">consult</span> the Wise Woman to ask her advice.</p>
+      
+      <p>"Since so many people have <span class="vocab-target" onclick="showDef('refer', 'verb: to tell someone to go to a certain person or place for help')">referred</span> me to her, I'm sure she can help," he thought, as he set out for her house.</p>
+      
+      <p>"I have a problem," the farmer said when he met the Wise Woman. "I am annoyed and <span class="vocab-target" onclick="showDef('irritate', 'verb: to annoy or bother')">irritated</span> because my house is very small and we have so many noisy children."</p>
+      
+      <p>The Wise Woman said, "<span class="vocab-target" onclick="showDef('coax', 'verb: to persuade someone by asking in a pleasant and gentle way; to urge')">Coax</span> your horse to come inside your house by talking to it in a pleasant and gentle way." The farmer thought this an odd suggestion, but he did as he was told.</p>
+      
+      <p>The next day, the farmer returned to the Wise Woman. He was very angry. "I <span class="vocab-target" onclick="showDef('reject', 'verb: to refuse to accept or believe something')">reject</span> your advice! It didn't help me!" he yelled. "I can't <span class="vocab-target" onclick="showDef('manage', 'verb: to control, direct, or succeed in doing something')">manage</span> to get anything done. The children are as noisy as ever, and now the horse <span class="vocab-target" onclick="showDef('topple', 'verb: to fall over or to make something fall over')">topples</span> the furniture and dishes. It makes them fall over and break."</p>
+      
+      <p>The Wise Woman said, "Load your brother's cows on your truck and <span class="vocab-target" onclick="showDef('transport', 'verb: to move someone or something from one place to another')">transport</span> them to your house. Bring them inside." Even though he was angry, the farmer decided to do as he was told. This <span class="vocab-target" onclick="showDef('boost', 'verb: to lift up or increase')">boosted</span> the noise to an even higher level! The farmer <span class="vocab-target" onclick="showDef('devote', 'verb: to give time and effort to some purpose')">devoted</span> all day to chasing the animals and his children. The animals <span class="vocab-target" onclick="showDef('assemble', 'verb: to put together or gather in groups')">assembled</span> all over the house, gathering in groups. After weeks of this, the farmer grew very tired. He <span class="vocab-target" onclick="showDef('weaken', 'verb: to lose strength or make less strong')">weakened</span> and lay down to rest.</p>
+      
+      <p>When he was rested, he went back to the Wise Woman's house. "Now," she advised, "take all the animals outside." The farmer did as she said. A day later, he came back.</p>
+      
+      <p>"I <span class="vocab-target" onclick="showDef('apologize', 'verb: to say you are sorry about something')">apologize</span>," he said. "I am sorry. My house is back to normal and now it seems peaceful. You have <span class="vocab-target" onclick="showDef('reveal', 'verb: to show or make known; to uncover')">revealed</span> to me a truth about life. People should learn to be content with their lives."</p>
     </div>
 
-    <div class="action-row">
-      <span></span>
-      <button class="btn" onclick="switchPage(2)">Continue to Live Match &rarr;</button>
-    </div>
-  </section>
-
-  <!-- MODAL FOR PAGE 1 -->
-  <div class="modal-overlay" id="wordModal" onclick="closeWordModal(event)">
-    <div class="modal-box" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeWordModal()">&times;</button>
-      <div class="modal-word" id="mWord">Word</div>
-      <div class="modal-pos">Part of Speech: Verb</div>
-      <div class="modal-def" id="mDef">Definition</div>
-      <div class="modal-clue" id="mClue">Context clue analysis</div>
-    </div>
-  </div>
-
-  <!-- PAGE 2: LIVE MATCHING (1-10) -->
-  <section id="panel2" class="page-panel">
-    <h2 class="page-title">Connect Words and Meanings (Items 1–10)</h2>
-    <div class="instructions">Select the matching definition letter for each verb. Immediate visual validation signals correct and incorrect answers live.</div>
-    
-    <div class="score-banner">
-      <span>Completed: <span id="p2Score">0</span> / 10 Correct</span>
-      <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.8rem;" onclick="resetPage2()">Reset</button>
-    </div>
-
-    <div id="p2Container"></div>
-
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(1)">&larr; Back</button>
-      <button class="btn" onclick="switchPage(3)">Next: Definitions & Studio &rarr;</button>
+    <div id="def-display" class="def-card">
+      <strong id="def-word" style="text-transform: capitalize; color: var(--primary);"></strong>: 
+      <span id="def-body"></span>
     </div>
   </section>
 
-  <!-- PAGE 3: DEFINITIONS (11-18) & BILLBOARD STUDIO -->
-  <section id="panel3" class="page-panel">
-    <h2 class="page-title">Connect More Words & Billboard Studio</h2>
-    <div class="instructions">Click the matching word for items 11–18. Instant grading validates your choice immediately.</div>
-
-    <div class="score-banner">
-      <span>Score: <span id="p3Score">0</span> / 8</span>
+  <!-- PAGE 2: CONNECT WORDS AND MEANINGS (1-10) -->
+  <section class="page-view" id="p2">
+    <div class="page-header">
+      <h2>Page 14: Connect Words and Meanings</h2>
+      <p>Select the correct definition letter for each word. Immediate visual validation indicates correct and incorrect choices.</p>
     </div>
 
-    <div id="p3Container"></div>
+    <div class="word-bank">
+      apologize • assemble • boost • coax • concentrate • consult • devote • irritate • manage • refer • reject • reveal • topple • transport • weaken
+    </div>
 
-    <hr style="margin:24px 0; border:none; border-top:1px solid var(--border);">
-    <h3 style="color:#1e3a8a; margin-bottom:8px;">Create a Billboard Activity</h3>
-    <p style="font-size:0.95rem; color:#475569;">Choose a verb, customize its look to reflect its meaning (e.g., <strong>BOOST</strong> lifts up), and create an advertising slogan!</p>
-    
-    <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-      <select id="bbSelect" onchange="updateBillboard()">
-        <option value="BOOST">boost (to lift or increase)</option>
-        <option value="TOPPLE">topple (to fall over)</option>
-        <option value="WEAKEN">weaken (to lose strength)</option>
-        <option value="CONCENTRATE">concentrate (to focus)</option>
-        <option value="ASSEMBLE">assemble (to gather)</option>
+    <div id="p2-items">
+      <div class="q-item">
+        <div class="q-text">1. irritate</div>
+        <select onchange="checkSelect(this, 'D')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">2. weaken</div>
+        <select onchange="checkSelect(this, 'G')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">3. concentrate</div>
+        <select onchange="checkSelect(this, 'E')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">4. transport</div>
+        <select onchange="checkSelect(this, 'I')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">5. assemble</div>
+        <select onchange="checkSelect(this, 'C')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">6. boost</div>
+        <select onchange="checkSelect(this, 'B')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">7. refer</div>
+        <select onchange="checkSelect(this, 'F')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">8. manage</div>
+        <select onchange="checkSelect(this, 'A')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">9. consult</div>
+        <select onchange="checkSelect(this, 'J')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">10. topple</div>
+        <select onchange="checkSelect(this, 'H')">
+          <option value="">-- Select Matching Definition --</option>
+          <option value="A">A. to control or direct</option>
+          <option value="B">B. to lift or increase</option>
+          <option value="C">C. to put together or gather in groups</option>
+          <option value="D">D. to annoy or bother</option>
+          <option value="E">E. to focus on something</option>
+          <option value="F">F. to tell someone to go to a certain person or place for help or information</option>
+          <option value="G">G. to lose strength</option>
+          <option value="H">H. to fall over or to make something fall over</option>
+          <option value="I">I. to move someone or something from one place to another</option>
+          <option value="J">J. to go to another person or resource for information and advice</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: CONNECT MORE WORDS & MEANINGS (11-18) -->
+  <section class="page-view" id="p3">
+    <div class="page-header">
+      <h2>Page 15: Connect More Words and Meanings</h2>
+      <p>Read each definition below and select the matching vocabulary verb.</p>
+    </div>
+
+    <div class="word-bank">
+      apologize • assemble • boost • coax • concentrate • consult • devote • irritate • manage • refer • reject • reveal • topple • transport • weaken
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">11. To say you are sorry about something:</div>
+      <select onchange="checkSelect(this, 'apologize')">
+        <option value="">-- Choose Word --</option>
+        <option value="consult">consult</option>
+        <option value="devote">devote</option>
+        <option value="apologize">apologize</option>
+        <option value="weaken">weaken</option>
       </select>
-      <input type="text" id="bbSloganInput" placeholder="Enter billboard slogan..." value="Give Yourself a Lift Today with Boost" oninput="updateBillboard()" style="flex:1; min-width:240px;">
     </div>
 
-    <div class="billboard-container" id="bbDisplay">
-      <div class="bb-word" id="bbWordDisplay">BOOST</div>
-      <div class="bb-slogan" id="bbSloganDisplay">Give Yourself a Lift Today with Boost</div>
+    <div class="q-item">
+      <div class="q-text">12. To refuse to accept something:</div>
+      <select onchange="checkSelect(this, 'reject')">
+        <option value="">-- Choose Word --</option>
+        <option value="irritate">irritate</option>
+        <option value="reject">reject</option>
+        <option value="reveal">reveal</option>
+        <option value="assemble">assemble</option>
+      </select>
     </div>
 
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(2)">&larr; Back</button>
-      <button class="btn" onclick="switchPage(4)">Next: Journal Cloze &rarr;</button>
+    <div class="q-item">
+      <div class="q-text">13. To persuade someone by asking in a pleasant and easy way; to urge:</div>
+      <select onchange="checkSelect(this, 'coax')">
+        <option value="">-- Choose Word --</option>
+        <option value="boost">boost</option>
+        <option value="transport">transport</option>
+        <option value="manage">manage</option>
+        <option value="coax">coax</option>
+      </select>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">14. To give time and effort to some purpose:</div>
+      <select onchange="checkSelect(this, 'devote')">
+        <option value="">-- Choose Word --</option>
+        <option value="topple">topple</option>
+        <option value="devote">devote</option>
+        <option value="reject">reject</option>
+        <option value="refer">refer</option>
+      </select>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">15. To show or make known; to uncover:</div>
+      <select onchange="checkSelect(this, 'reveal')">
+        <option value="">-- Choose Word --</option>
+        <option value="concentrate">concentrate</option>
+        <option value="reveal">reveal</option>
+        <option value="apologize">apologize</option>
+        <option value="coax">coax</option>
+      </select>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">16. To annoy or bother:</div>
+      <select onchange="checkSelect(this, 'irritate')">
+        <option value="">-- Choose Word --</option>
+        <option value="coax">coax</option>
+        <option value="refer">refer</option>
+        <option value="irritate">irritate</option>
+        <option value="reject">reject</option>
+      </select>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">17. To make less strong:</div>
+      <select onchange="checkSelect(this, 'weaken')">
+        <option value="">-- Choose Word --</option>
+        <option value="reveal">reveal</option>
+        <option value="apologize">apologize</option>
+        <option value="boost">boost</option>
+        <option value="weaken">weaken</option>
+      </select>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">18. To bring together as a group:</div>
+      <select onchange="checkSelect(this, 'assemble')">
+        <option value="">-- Choose Word --</option>
+        <option value="consult">consult</option>
+        <option value="manage">manage</option>
+        <option value="assemble">assemble</option>
+        <option value="devote">devote</option>
+      </select>
+    </div>
+
+    <h3 style="margin-top: 25px; color: var(--primary);">Create a Billboard</h3>
+    <p>Choose a vocabulary verb, style it dynamically to show its meaning, and create an advertising slogan.</p>
+    
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;">
+      <select id="bb-word-choice" onchange="renderBillboard()" style="max-width: 250px;">
+        <option value="BOOST">boost (lift or increase)</option>
+        <option value="TOPPLE">topple (fall over)</option>
+        <option value="WEAKEN">weaken (lose strength)</option>
+        <option value="CONCENTRATE">concentrate (focus)</option>
+        <option value="ASSEMBLE">assemble (gather together)</option>
+      </select>
+      <input type="text" id="bb-slogan-input" value="Give Yourself a Lift Today with Boost" oninput="renderBillboard()" placeholder="Enter billboard slogan..." style="flex: 1;">
+    </div>
+
+    <div class="billboard-box" id="bb-preview">
+      <div class="billboard-word" id="bb-word-text">BOOST</div>
+      <div class="billboard-slogan" id="bb-slogan-text">Give Yourself a Lift Today with Boost</div>
     </div>
   </section>
 
-  <!-- PAGE 4: JOURNAL CLOZE & LIVE WRITING TRACKER -->
-  <section id="panel4" class="page-panel">
-    <h2 class="page-title">Use Words in Context: Journal Cloze</h2>
-    <div class="instructions">Select the verb that correctly fits each context blank in the Wise Woman's journal. Feedback triggers instantly!</div>
+  <!-- PAGE 4: USE WORDS IN CONTEXT (JOURNAL CLOZE) -->
+  <section class="page-view" id="p4">
+    <div class="page-header">
+      <h2>Page 16: Use Words in Context</h2>
+      <p>Help the Wise Woman complete her journal entry. Select the correct vocabulary verb for each blank.</p>
+    </div>
 
-    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:20px; line-height:2.4; font-size:1.05rem;">
-      Dear Journal,<br>
+    <div class="word-bank">
+      apologize • assemble • boost • coax • concentrate • consult • devote • irritate • manage • refer • reject • reveal • topple • transport • weaken
+    </div>
+
+    <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 8px; padding: 22px; line-height: 2.2; font-size: 15px; margin-bottom: 25px;">
+      <strong>Dear Journal,</strong><br>
       Every day, I (1) 
-      <select id="cloze_1" onchange="checkClozeLive(1, 'consult')">
-        <option value="">--select--</option><option value="consult">consult</option><option value="boost">boost</option><option value="transport">transport</option>
-      </select><span id="cspan_1"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'consult')">
+        <option value="">-- Choose --</option>
+        <option value="consult">consult</option>
+        <option value="boost">boost</option>
+        <option value="transport">transport</option>
+      </select>
       with people, giving them advice and helping them solve their problems. A few days ago, a farmer came to see me. He told me that the noise and activity in his small house (2) 
-      <select id="cloze_2" onchange="checkClozeLive(2, 'irritated')">
-        <option value="">--select--</option><option value="apologized">apologized</option><option value="devoted">devoted</option><option value="irritated">irritated</option>
-      </select><span id="cspan_2"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'irritated')">
+        <option value="">-- Choose --</option>
+        <option value="apologized">apologized</option>
+        <option value="devoted">devoted</option>
+        <option value="irritated">irritated</option>
+      </select>
       him. He could not (3) 
-      <select id="cloze_3" onchange="checkClozeLive(3, 'concentrate')">
-        <option value="">--select--</option><option value="assemble">assemble</option><option value="reject">reject</option><option value="concentrate">concentrate</option>
-      </select><span id="cspan_3"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'concentrate')">
+        <option value="">-- Choose --</option>
+        <option value="assemble">assemble</option>
+        <option value="reject">reject</option>
+        <option value="concentrate">concentrate</option>
+      </select>
       or focus on his chores. As a result, he could not (4) 
-      <select id="cloze_4" onchange="checkClozeLive(4, 'manage')">
-        <option value="">--select--</option><option value="manage">manage</option><option value="coax">coax</option><option value="topple">topple</option>
-      </select><span id="cspan_4"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'manage')">
+        <option value="">-- Choose --</option>
+        <option value="manage">manage</option>
+        <option value="coax">coax</option>
+        <option value="topple">topple</option>
+      </select>
       to get much done. He needed to (5) 
-      <select id="cloze_5" onchange="checkClozeLive(5, 'devote')">
-        <option value="">--select--</option><option value="devote">devote</option><option value="weaken">weaken</option><option value="consult">consult</option>
-      </select><span id="cspan_5"></span>
-      more time to his work and spend less effort trying to keep everyone quiet.<br>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'devote')">
+        <option value="">-- Choose --</option>
+        <option value="devote">devote</option>
+        <option value="weaken">weaken</option>
+        <option value="consult">consult</option>
+      </select>
+      more time to his work and spend less effort trying to keep everyone quiet.<br><br>
+      
       I had a plan to help him, but I did not (6) 
-      <select id="cloze_6" onchange="checkClozeLive(6, 'reveal')">
-        <option value="">--select--</option><option value="refer">refer</option><option value="reveal">reveal</option><option value="irritate">irritate</option>
-      </select><span id="cspan_6"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'reveal')">
+        <option value="">-- Choose --</option>
+        <option value="refer">refer</option>
+        <option value="reveal">reveal</option>
+        <option value="irritate">irritate</option>
+      </select>
       its purpose to him. I (7) 
-      <select id="cloze_7" onchange="checkClozeLive(7, 'coaxed')">
-        <option value="">--select--</option><option value="coaxed">coaxed</option><option value="concentrated">concentrated</option><option value="managed">managed</option>
-      </select><span id="cspan_7"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'coaxed')">
+        <option value="">-- Choose --</option>
+        <option value="coaxed">coaxed</option>
+        <option value="concentrated">concentrated</option>
+        <option value="managed">managed</option>
+      </select>
       him into bringing a horse and some cows into his house. I asked him in a pleasant way, because who would want all those noisy animals inside? Once all the animals were (8) 
-      <select id="cloze_8" onchange="checkClozeLive(8, 'assembled')">
-        <option value="">--select--</option><option value="revealed">revealed</option><option value="weakened">weakened</option><option value="assembled">assembled</option>
-      </select><span id="cspan_8"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'assembled')">
+        <option value="">-- Choose --</option>
+        <option value="revealed">revealed</option>
+        <option value="weakened">weakened</option>
+        <option value="assembled">assembled</option>
+      </select>
       or gathered inside, what a racket they made! I still laugh when I think about it. The animals ran around bumping into things. They (9) 
-      <select id="cloze_9" onchange="checkClozeLive(9, 'toppled')">
-        <option value="">--select--</option><option value="irritated">irritated</option><option value="managed">managed</option><option value="toppled">toppled</option>
-      </select><span id="cspan_9"></span>
-      the dishes and furniture. If the farmer thought he had trouble before, now he could see what real trouble was like.<br>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'toppled')">
+        <option value="">-- Choose --</option>
+        <option value="irritated">irritated</option>
+        <option value="managed">managed</option>
+        <option value="toppled">toppled</option>
+      </select>
+      the dishes and furniture. If the farmer thought he had trouble before, now he could see what real trouble was like.<br><br>
+      
       Tomorrow, I will tell him to take the animals back outside. The house will seem so quiet. I think he will (10) 
-      <select id="cloze_10" onchange="checkClozeLive(10, 'apologize')">
-        <option value="">--select--</option><option value="coax">coax</option><option value="boost">boost</option><option value="apologize">apologize</option>
-      </select><span id="cspan_10"></span>
+      <select style="width: 140px; display: inline-block;" onchange="checkSelect(this, 'apologize')">
+        <option value="">-- Choose --</option>
+        <option value="coax">coax</option>
+        <option value="boost">boost</option>
+        <option value="apologize">apologize</option>
+      </select>
       to me, telling me he is sorry that he doubted my wisdom.
     </div>
 
-    <div class="tracker-box">
-      <div class="tracker-title">Creative Prompt: Thank-You Card to the Wise Woman</div>
-      <p style="font-size:0.9rem; margin-bottom:10px; color:#475569;">Write the farmer's thank-you card. Use at least <strong>3 vocabulary verbs</strong>. As you type, the tags below will automatically turn green!</p>
-      <textarea id="tyCardText" rows="4" style="width:100%; resize:vertical;" placeholder="Dear Wise Woman, I apologize for rejecting your advice earlier..." oninput="trackWritingVocab()"></textarea>
-      <div class="chips-wrapper" id="writingChips"></div>
-    </div>
-
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(3)">&larr; Back</button>
-      <button class="btn" onclick="switchPage(5)">Next: Words into Action &rarr;</button>
+    <div class="q-item">
+      <div class="q-text">Make a Thank-You Card Using Verbs:</div>
+      <p style="font-size: 13.5px; color: #64748b; margin-bottom: 8px;">Imagine you are the farmer. Write a thank-you card to the Wise Woman. Explain how your situation was before and why it is better now. Use at least three vocabulary words:</p>
+      <textarea id="ty-card-text" oninput="trackCardVocab()" placeholder="Dear Wise Woman, I want to apologize for doubting your advice..."></textarea>
+      <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+        Vocabulary words used: <span id="used-count" style="font-weight: bold; color: var(--primary);">0</span> / 15
+      </div>
     </div>
   </section>
 
   <!-- PAGE 5: PUT WORDS INTO ACTION -->
-  <section id="panel5" class="page-panel">
-    <h2 class="page-title">Put Words Into Action</h2>
-    <div class="instructions">Type the target vocabulary verb that completes each caption. The fields check your spelling and choice live as you type!</div>
-
-    <div id="actionContainer"></div>
-
-    <div class="tracker-box" style="margin-top:20px;">
-      <div class="tracker-title">Write a Story Using Verbs (Goal: 5 Verbs)</div>
-      <p style="font-size:0.9rem; margin-bottom:8px; color:#475569;">Tell a short story of someone else seeking advice from the Wise Woman. The word tracker turns green as you include vocabulary words!</p>
-      <textarea id="storyText" rows="4" style="width:100%; resize:vertical;" placeholder="Write your story here..." oninput="trackStoryVocab()"></textarea>
-      <div class="chips-wrapper" id="storyChips"></div>
+  <section class="page-view" id="p5">
+    <div class="page-header">
+      <h2>Page 17: Put Words Into Action</h2>
+      <p>Type the vocabulary word that fits each caption. Fields validate spelling live as you type.</p>
     </div>
 
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(4)">&larr; Back</button>
-      <button class="btn" onclick="switchPage(6)">Next: Verb Tenses &rarr;</button>
+    <div class="word-bank">
+      apologize • assemble • boost • coax • concentrate • consult • devote • irritate • manage • refer • reject • reveal • topple • transport • weaken
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">1. Look at the farmer speak gently to the animals and 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'coax')"> 
+        them into the house!
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">2. The animals 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'assemble')"> 
+        in the kitchen in a big group.
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">3. The mess and noise 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'irritate')"> 
+        the farmer's family and everyone gets annoyed.
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">4. Uh, oh! The furniture will 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'topple')"> 
+        down and fall on the floor!
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">5. The farmer will 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'apologize')"> 
+        to the Wise Woman and say that he is sorry.
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">6. The Wise Woman will 
+        <input type="text" style="width: 130px;" oninput="checkInline(this, 'reveal')"> 
+        the secret behind her plan.
+      </div>
+      <input type="text" placeholder="Write what the farmer might say..." style="max-width: 100%; margin-top: 6px;">
+    </div>
+
+    <div class="q-item" style="margin-top: 25px;">
+      <div class="q-text">Write a Story Using Verbs (Goal: At least 5 verbs):</div>
+      <p style="font-size: 13.5px; color: #64748b; margin-bottom: 8px;">Write a story telling about another person who goes to the Wise Woman for advice. Note the problem and the steps she takes to solve it:</p>
+      <textarea id="action-story-text" oninput="trackStoryVocab()" placeholder="Once, a baker went to consult the Wise Woman because..."></textarea>
+      <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+        Story verbs included: <span id="story-count" style="font-weight: bold; color: var(--primary);">0</span> / 15
+      </div>
     </div>
   </section>
 
   <!-- PAGE 6: REVIEW AND EXTEND (VERB TENSES) -->
-  <section id="panel6" class="page-panel">
-    <h2 class="page-title">Review & Extend: Verb Tenses Drill</h2>
-    <div class="instructions">Use context clues and tense markers (-s, -ed, -ing) to type the correct inflected verb form. Instant visual feedback is provided upon typing.</div>
+  <section class="page-view" id="p6">
+    <div class="page-header">
+      <h2>Page 18: Review and Extend (Verb Tenses)</h2>
+      <p>Use context clues and tense endings to type the correct inflected verb form. Answers remain hidden until requested.</p>
+    </div>
 
-    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin-bottom:20px;">
-      <div style="background:#eff6ff; padding:10px; border-radius:6px; border:1px solid #bfdbfe; font-size:0.85rem;">
-        <strong>Present Tense</strong><br>Happening now: add <em>-s</em><br><small>He talks</small>
+    <div class="tip-box">
+      <strong>Verb Tense Rules:</strong><br>
+      • <strong>Present Tense</strong> (happening now): add <em>-s</em> (He talks)<br>
+      • <strong>Past Tense</strong> (already happened): add <em>-d</em> or <em>-ed</em> (He talked)<br>
+      • <strong>Ongoing Action</strong> (still happening): add <em>-ing</em> (He is talking)
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">1. The fifth graders are really working hard and spend most of their time helping animals. They are 
+        <input type="text" style="width: 160px;" oninput="checkInline(this, 'devoting')"> 
+        time to this activity.
       </div>
-      <div style="background:#eff6ff; padding:10px; border-radius:6px; border:1px solid #bfdbfe; font-size:0.85rem;">
-        <strong>Past Tense</strong><br>Already happened: add <em>-d</em> or <em>-ed</em><br><small>He talked</small>
-      </div>
-      <div style="background:#eff6ff; padding:10px; border-radius:6px; border:1px solid #bfdbfe; font-size:0.85rem;">
-        <strong>Ongoing Action</strong><br>Still happening: add <em>-ing</em><br><small>He is talking</small>
+      <button type="button" class="btn-hint" onclick="toggleHint('hint-1')">💡 HINT</button>
+      <div id="hint-1" class="hint-card">
+        <strong>Hint:</strong> The clue "They are..." signals ongoing action (-ing). Take base verb <em>devote</em>, drop the <em>-e</em>, and add <em>-ing</em>: <strong>devoting</strong>.
       </div>
     </div>
 
-    <div id="tenseContainer"></div>
-
-    <div class="tracker-box" style="margin-top:20px;">
-      <div class="tracker-title">Bumper Sticker Studio</div>
-      <p style="font-size:0.9rem; color:#475569; margin-bottom:8px;">Write a bumper sticker slogan beginning with an imperative verb or "Do not" (e.g., <em>"Concentrate harder!"</em> or <em>"Do not irritate your friends!"</em>).</p>
-      <input type="text" id="bumperInput" placeholder="Do not irritate..." style="width:100%;" oninput="checkBumper()">
-      <div id="bumperFeedback" style="margin-top:8px; font-weight:600; font-size:0.9rem;"></div>
+    <div class="q-item">
+      <div class="q-text">2. This year, they are focusing on learning about farming. Today, they are 
+        <input type="text" style="width: 160px;" oninput="checkInline(this, 'concentrating')"> 
+        on farm animals and crops.
+      </div>
+      <button type="button" class="btn-hint" onclick="toggleHint('hint-2')">💡 HINT</button>
+      <div id="hint-2" class="hint-card">
+        <strong>Hint:</strong> "Today, they are..." signals an ongoing action (-ing). Take base verb <em>concentrate</em>, drop the <em>-e</em>, and add <em>-ing</em>: <strong>concentrating</strong>.
+      </div>
     </div>
 
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(5)">&larr; Back</button>
-      <button class="btn" onclick="switchPage(7)">Take Mastery Test &rarr;</button>
+    <div class="q-item">
+      <div class="q-text">3. Yesterday, the principal met with farmers to learn about crops. He 
+        <input type="text" style="width: 160px;" oninput="checkInline(this, 'consulted')"> 
+        with the farmers.
+      </div>
+      <button type="button" class="btn-hint" onclick="toggleHint('hint-3')">💡 HINT</button>
+      <div id="hint-3" class="hint-card">
+        <strong>Hint:</strong> "Yesterday" indicates past tense (already happened). Add <em>-ed</em> to the base verb <em>consult</em>: <strong>consulted</strong>.
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">4. The principal has arranged to get farmers to come to school to talk with students. She 
+        <input type="text" style="width: 160px;" oninput="checkInline(this, 'managed')"> 
+        to get five speakers to come.
+      </div>
+      <button type="button" class="btn-hint" onclick="toggleHint('hint-4')">💡 HINT</button>
+      <div id="hint-4" class="hint-card">
+        <strong>Hint:</strong> The action is completed in the past. Add <em>-d</em> to the base verb <em>manage</em>: <strong>managed</strong>.
+      </div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">5. Holding this meeting at school is easier than moving five classes of students! This way the principal would not be 
+        <input type="text" style="width: 160px;" oninput="checkInline(this, 'transporting')"> 
+        120 students.
+      </div>
+      <button type="button" class="btn-hint" onclick="toggleHint('hint-5')">💡 HINT</button>
+      <div id="hint-5" class="hint-card">
+        <strong>Hint:</strong> The helping phrase "would not be..." calls for ongoing action (-ing). Add <em>-ing</em> to the base verb <em>transport</em>: <strong>transporting</strong>.
+      </div>
+    </div>
+
+    <div class="q-item" style="margin-top: 25px;">
+      <div class="q-text">Bumper Sticker Slogans:</div>
+      <p style="font-size: 13.5px; color: #64748b; margin-bottom: 8px;">Write a slogan beginning with an imperative action verb or the words "Do not" (e.g., <em>Concentrate harder!</em> or <em>Do not irritate your friends!</em>):</p>
+      <input type="text" id="bumper-text" oninput="checkBumperSlogan(this)" placeholder="Do not irritate..." style="max-width: 100%;">
+      <span id="bumper-feedback" class="feedback"></span>
     </div>
   </section>
 
-  <!-- PAGE 7: MASTERY TEST ENGINE -->
-  <section id="panel7" class="page-panel">
-    <h2 class="page-title">Check Your Mastery</h2>
-    <div class="instructions">Complete all 10 evaluation questions. Click "Submit Test" to calculate your final percentage score and view the itemized diagnostic review.</div>
-
-    <div id="masteryQuestions"></div>
-
-    <div style="text-align:center; margin-top:24px;">
-      <button class="btn" style="padding:12px 32px; font-size:1.05rem;" onclick="evaluateMastery()">Submit Unit Test</button>
+  <!-- PAGE 7: CHECK YOUR MASTERY -->
+  <section class="page-view" id="p7">
+    <div class="page-header">
+      <h2>Page 19: Check Your Mastery</h2>
+      <p>Complete this final evaluation to assess your mastery of the 15 vocabulary verbs.</p>
     </div>
 
-    <div id="masteryResults" style="display:none; margin-top:24px;">
-      <div class="grade-badge" id="gradeBadge">100%</div>
-      <div id="gradeSummary" style="text-align:center; font-weight:600; margin-bottom:16px;"></div>
-      <table class="report-table">
+    <div id="mastery-banner" class="score-alert"></div>
+
+    <form id="mastery-form">
+      <div class="q-item">
+        <div class="q-text">1. When you put together the pieces of a model car, bookcase, or table, you:</div>
+        <select id="mq1">
+          <option value="">-- Choose Word --</option>
+          <option value="boost">boost</option>
+          <option value="transport">transport</option>
+          <option value="assemble">assemble</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">2. If you have poison ivy and you scratch it, you will probably:</div>
+        <select id="mq2">
+          <option value="">-- Choose Word --</option>
+          <option value="irritate">irritate</option>
+          <option value="topple">topple</option>
+          <option value="manage">manage</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">3. When raccoons chew on a tree, they [blank] the inner core and the tree falls down:</div>
+        <select id="mq3">
+          <option value="">-- Choose Word --</option>
+          <option value="weaken">weaken</option>
+          <option value="boost">boost</option>
+          <option value="reveal">reveal</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">4. People who enjoy their hobbies often [blank] a lot of time to them:</div>
+        <select id="mq4">
+          <option value="">-- Choose Word --</option>
+          <option value="coax">coax</option>
+          <option value="devote">devote</option>
+          <option value="refer">refer</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">5. Because Raul was reading a good book, he did not [blank] on the TV show:</div>
+        <select id="mq5">
+          <option value="">-- Choose Word --</option>
+          <option value="reject">reject</option>
+          <option value="concentrate">concentrate</option>
+          <option value="consult">consult</option>
+        </select>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">6. Which of the following actions might make someone apologize?</div>
+        <label><input type="radio" name="mq6" value="A"> A) Eating a salad</label><br>
+        <label><input type="radio" name="mq6" value="B"> B) Walking to school</label><br>
+        <label><input type="radio" name="mq6" value="C"> C) Stepping on someone's toes</label><br>
+        <label><input type="radio" name="mq6" value="D"> D) Writing an A+ book report</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">7. Which of the following would be the easiest for you to transport?</div>
+        <label><input type="radio" name="mq7" value="A"> A) Time</label><br>
+        <label><input type="radio" name="mq7" value="B"> B) Food</label><br>
+        <label><input type="radio" name="mq7" value="C"> C) Rain</label><br>
+        <label><input type="radio" name="mq7" value="D"> D) Hope</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">8. Which of the following would most likely topple?</div>
+        <label><input type="radio" name="mq8" value="A"> A) The foundation of a house</label><br>
+        <label><input type="radio" name="mq8" value="B"> B) A tower of blocks</label><br>
+        <label><input type="radio" name="mq8" value="C"> C) Money</label><br>
+        <label><input type="radio" name="mq8" value="D"> D) Ducks</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">9. Whom would you most likely consult if you were ill?</div>
+        <label><input type="radio" name="mq9" value="A"> A) A doctor</label><br>
+        <label><input type="radio" name="mq9" value="B"> B) A teacher</label><br>
+        <label><input type="radio" name="mq9" value="C"> C) A lawyer</label><br>
+        <label><input type="radio" name="mq9" value="D"> D) An athlete</label>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">10. Which of the following would a banker manage?</div>
+        <label><input type="radio" name="mq10" value="A"> A) Liberty</label><br>
+        <label><input type="radio" name="mq10" value="B"> B) Animals</label><br>
+        <label><input type="radio" name="mq10" value="C"> C) Bakery goods</label><br>
+        <label><input type="radio" name="mq10" value="D"> D) Money</label>
+      </div>
+
+      <button type="button" class="btn btn-success" onclick="scoreMastery()">Grade My Mastery Test</button>
+    </form>
+
+    <div id="diagnostic-section" style="display: none; margin-top: 25px;">
+      <h3 style="color: var(--primary);">Diagnostic Breakdown</h3>
+      <table class="diagnostic-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Question Focus</th>
+            <th>Item Prompt</th>
             <th>Your Answer</th>
-            <th>Result</th>
+            <th>Status</th>
             <th>Explanation</th>
           </tr>
         </thead>
-        <tbody id="reportRows"></tbody>
+        <tbody id="diagnostic-rows"></tbody>
       </table>
     </div>
-
-    <div class="action-row">
-      <button class="btn btn-secondary" onclick="switchPage(6)">&larr; Back to Tenses</button>
-      <span></span>
-    </div>
   </section>
+
+  <!-- Footer Pagination -->
+  <div class="footer-nav">
+    <button class="btn btn-outline" id="prev-btn" onclick="prevPage()">← Previous Page</button>
+    <span id="page-indicator" style="font-weight: 600; color: #64748b;">Page 1 of 7</span>
+    <button class="btn btn-outline" id="next-btn" onclick="nextPage()">Next Page →</button>
+  </div>
 </div>
 
 <script>
-  // 15 VOCABULARY DATABASE WITH CONTEXT CLUE DETAILS
-  const VOCAB_DATA = {
-    apologize: { def: "to say you are sorry about something", clue: "The farmer says 'I apologize... I am sorry' when he recognizes the Wise Woman's lesson." },
-    assemble: { def: "to put together or gather in groups", clue: "Text clues: 'gathering in groups' directly defines the action of assembling." },
-    boost: { def: "to lift or increase", clue: "Text clue: 'boosted the noise to an even higher level' shows an upward increase." },
-    coax: { def: "to persuade someone by asking in a pleasant and gentle way; to urge", clue: "Context clue: 'talking to it in a pleasant and gentle way'." },
-    concentrate: { def: "to focus on something", clue: "Clue: The farmer could not get work done or focus because his house was so noisy." },
-    consult: { def: "to go to another person or resource for information and advice", clue: "Context clue: people told him to 'consult the Wise Woman to ask her advice'." },
-    devote: { def: "to give time and effort to some purpose", clue: "Context clue: 'devoted all day to chasing the animals'." },
-    irritate: { def: "to annoy or bother", clue: "Paired with 'annoyed' in the story: 'I am annoyed and irritated'." },
-    manage: { def: "to control, direct, or succeed in doing", clue: "Context: 'can't manage to get anything done' means failing to accomplish tasks." },
-    refer: { def: "to tell someone to go to a certain person or place for help or info", clue: "Story context: people directed the farmer to the Wise Woman." },
-    reject: { def: "to refuse to accept something", clue: "Context: 'I reject your advice! It didn't help me!'" },
-    reveal: { def: "to show or make known; to uncover", clue: "Context: 'You have revealed to me a truth about life'." },
-    topple: { def: "to fall over or to make something fall over", clue: "Context clue: 'makes them fall over and break'." },
-    transport: { def: "to move someone or something from one place to another", clue: "Clue: 'Load your brother's cows on your truck and transport them'." },
-    weaken: { def: "to lose strength", clue: "Context: 'The farmer grew very tired. He weakened and lay down to rest'." }
-  };
+  let currentPage = 1;
+  const totalPages = 7;
 
-  const VOCAB_WORDS = Object.keys(VOCAB_DATA);
-
-  // TAB SWITCHING
-  function switchPage(n) {
-    document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+  function switchPage(pageIndex) {
+    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('panel' + n).classList.add('active');
-    document.querySelectorAll('.tab-btn')[n - 1].classList.add('active');
-    document.getElementById('pageIndicator').innerText = `Page ${n} / 7`;
+    
+    document.getElementById(`p${pageIndex}`).classList.add('active');
+    document.querySelectorAll('.tab-btn')[pageIndex - 1].classList.add('active');
+    currentPage = pageIndex;
+    
+    document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prev-btn').disabled = currentPage === 1;
+    document.getElementById('next-btn').disabled = currentPage === totalPages;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // PAGE 1: READER MODAL
-  function showWordModal(w) {
-    const data = VOCAB_DATA[w];
-    if (!data) return;
-    document.getElementById('mWord').innerText = w;
-    document.getElementById('mDef').innerText = data.def;
-    document.getElementById('mClue').innerHTML = `<strong>Context Clue:</strong> ${data.clue}`;
-    document.getElementById('wordModal').classList.add('open');
-  }
-  function closeWordModal(e) {
-    document.getElementById('wordModal').classList.remove('open');
+  function prevPage() { if (currentPage > 1) switchPage(currentPage - 1); }
+  function nextPage() { if (currentPage < totalPages) switchPage(currentPage + 1); }
+
+  // Page 1 Definition Card Display
+  function showDef(word, text) {
+    const card = document.getElementById('def-display');
+    document.getElementById('def-word').textContent = word;
+    document.getElementById('def-body').textContent = text;
+    card.style.display = 'block';
   }
 
-  // PAGE 2: LIVE MATCHING (1-10)
-  const P2_ITEMS = [
-    { word: "irritate", ans: "D", defText: "D. to annoy or bother" },
-    { word: "weaken", ans: "G", defText: "G. to lose strength" },
-    { word: "concentrate", ans: "E", defText: "E. to focus on something" },
-    { word: "transport", ans: "I", defText: "I. to move someone or something from one place to another" },
-    { word: "assemble", ans: "C", defText: "C. to put together or gather in groups" },
-    { word: "boost", ans: "B", defText: "B. to lift or increase" },
-    { word: "refer", ans: "F", defText: "F. to tell someone to go to a certain person or place for help or information" },
-    { word: "manage", ans: "A", defText: "A. to control or direct" },
-    { word: "consult", ans: "J", defText: "J. to go to another person or resource for information and advice" },
-    { word: "topple", ans: "H", defText: "H. to fall over or to make something fall over" }
-  ];
-
-  const P2_OPTIONS = [
-    { letter: "A", text: "A. to control or direct" },
-    { letter: "B", text: "B. to lift or increase" },
-    { letter: "C", text: "C. to put together or gather in groups" },
-    { letter: "D", text: "D. to annoy or bother" },
-    { letter: "E", text: "E. to focus on something" },
-    { letter: "F", text: "F. to tell someone to go to a person/place" },
-    { letter: "G", text: "G. to lose strength" },
-    { letter: "H", text: "H. to fall over or make fall over" },
-    { letter: "I", text: "I. to move from one place to another" },
-    { letter: "J", text: "J. to go to another for advice" }
-  ];
-
-  function initPage2() {
-    const cont = document.getElementById('p2Container');
-    cont.innerHTML = P2_ITEMS.map((it, idx) => `
-      <div class="item-card" id="p2_card_${idx}">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <div><strong>${idx + 1}. ${it.word}</strong></div>
-          <div style="display:flex; align-items:center;">
-            <select id="p2_sel_${idx}" onchange="checkP2Live(${idx})">
-              <option value="">-- select definition --</option>
-              ${P2_OPTIONS.map(o => `<option value="${o.letter}">${o.text}</option>`).join('')}
-            </select>
-            <span id="p2_badge_${idx}"></span>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function checkP2Live(idx) {
-    const sel = document.getElementById(`p2_sel_${idx}`);
-    const card = document.getElementById(`p2_card_${idx}`);
-    const badge = document.getElementById(`p2_badge_${idx}`);
-    const val = sel.value;
-
-    if (!val) {
-      card.className = 'item-card';
-      badge.innerHTML = '';
-    } else if (val === P2_ITEMS[idx].ans) {
-      card.className = 'item-card is-correct';
-      badge.innerHTML = '<span class="live-badge valid">✔ Correct</span>';
+  // Interactive Checking Utilities
+  function checkSelect(sel, ans) {
+    if (sel.value === ans) {
+      sel.className = 'correct';
+    } else if (sel.value === '') {
+      sel.className = '';
     } else {
-      card.className = 'item-card is-incorrect';
-      badge.innerHTML = '<span class="live-badge invalid">✖ Try Again</span>';
+      sel.className = 'incorrect';
     }
-    updateP2Count();
   }
 
-  function updateP2Count() {
-    let count = 0;
-    P2_ITEMS.forEach((it, idx) => {
-      if (document.getElementById(`p2_sel_${idx}`).value === it.ans) count++;
-    });
-    document.getElementById('p2Score').innerText = count;
-  }
-
-  function resetPage2() {
-    P2_ITEMS.forEach((_, idx) => {
-      document.getElementById(`p2_sel_${idx}`).value = '';
-      document.getElementById(`p2_card_${idx}`).className = 'item-card';
-      document.getElementById(`p2_badge_${idx}`).innerHTML = '';
-    });
-    updateP2Count();
-  }
-
-  // PAGE 3: DEFINITION MULTIPLE CHOICE (11-18)
-  const P3_ITEMS = [
-    { num: 11, def: "to say you are sorry about something", opts: ["apologize", "consult", "devote", "weaken"], ans: "apologize" },
-    { num: 12, def: "to refuse to accept something", opts: ["irritate", "reveal", "reject", "assemble"], ans: "reject" },
-    { num: 13, def: "to persuade someone by asking in a pleasant and easy way; to urge", opts: ["boost", "coax", "transport", "manage"], ans: "coax" },
-    { num: 14, def: "to give time and effort to some purpose", opts: ["devote", "topple", "reject", "refer"], ans: "devote" },
-    { num: 15, def: "to show or make known; to uncover", opts: ["concentrate", "apologize", "reveal", "coax"], ans: "reveal" },
-    { num: 16, def: "to annoy or bother", opts: ["coax", "irritate", "refer", "reject"], ans: "irritate" },
-    { num: 17, def: "to make less strong", opts: ["reveal", "apologize", "boost", "weaken"], ans: "weaken" },
-    { num: 18, def: "to bring together as a group", opts: ["consult", "manage", "assemble", "devote"], ans: "assemble" }
-  ];
-
-  function initPage3() {
-    const cont = document.getElementById('p3Container');
-    cont.innerHTML = P3_ITEMS.map((item, idx) => `
-      <div class="item-card" id="p3_card_${idx}">
-        <div><strong>${item.num}.</strong> Definition: <em>"${item.def}"</em></div>
-        <div class="mc-grid">
-          ${item.opts.map(opt => `
-            <button class="mc-btn" id="p3_btn_${idx}_${opt}" onclick="pickP3Opt(${idx}, '${opt}')">${opt}</button>
-          `).join('')}
-        </div>
-        <div id="p3_fb_${idx}" style="margin-top:6px; font-size:0.85rem; font-weight:600;"></div>
-      </div>
-    `).join('');
-  }
-
-  function pickP3Opt(idx, opt) {
-    const item = P3_ITEMS[idx];
-    const card = document.getElementById(`p3_card_${idx}`);
-    const fb = document.getElementById(`p3_fb_${idx}`);
-    
-    // Clear styles
-    item.opts.forEach(o => {
-      document.getElementById(`p3_btn_${idx}_${o}`).className = 'mc-btn';
-    });
-
-    if (opt === item.ans) {
-      document.getElementById(`p3_btn_${idx}_${opt}`).classList.add('correct');
-      card.className = 'item-card is-correct';
-      fb.innerHTML = '<span style="color:var(--success)">✔ Correct match!</span>';
+  function checkInline(inp, ans) {
+    const val = inp.value.trim().toLowerCase();
+    if (val === ans) {
+      inp.className = 'correct';
+    } else if (val.length === 0) {
+      inp.className = '';
     } else {
-      document.getElementById(`p3_btn_${idx}_${opt}`).classList.add('incorrect');
-      card.className = 'item-card is-incorrect';
-      fb.innerHTML = '<span style="color:var(--error)">✖ Incorrect. Try again!</span>';
+      inp.className = 'incorrect';
     }
-    updateP3Score();
   }
 
-  function updateP3Score() {
-    let count = 0;
-    P3_ITEMS.forEach((it, idx) => {
-      const btn = document.getElementById(`p3_btn_${idx}_${it.ans}`);
-      if (btn && btn.classList.contains('correct')) count++;
-    });
-    document.getElementById('p3Score').innerText = count;
-  }
-
-  // BILLBOARD STUDIO
-  function updateBillboard() {
-    const word = document.getElementById('bbSelect').value;
-    const slogan = document.getElementById('bbSloganInput').value;
-    const wordEl = document.getElementById('bbWordDisplay');
-    const disp = document.getElementById('bbDisplay');
+  // Page 3 Billboard Generator
+  function renderBillboard() {
+    const word = document.getElementById('bb-word-choice').value;
+    const slogan = document.getElementById('bb-slogan-input').value;
+    const wordEl = document.getElementById('bb-word-text');
+    const box = document.getElementById('bb-preview');
     
-    wordEl.innerText = word;
-    document.getElementById('bbSloganDisplay').innerText = slogan;
+    wordEl.textContent = word;
+    document.getElementById('bb-slogan-text').textContent = slogan;
 
-    // Dynamic style based on verb meaning
     if (word === 'BOOST') {
-      wordEl.style.transform = 'translateY(-8px) scale(1.1)';
+      wordEl.style.transform = 'translateY(-6px) scale(1.1)';
       wordEl.style.color = '#38bdf8';
-      disp.style.background = 'linear-gradient(to top, #0f172a, #1e3a8a)';
+      box.style.background = 'linear-gradient(to top, #0f172a, #1e3a8a)';
     } else if (word === 'TOPPLE') {
-      wordEl.style.transform = 'rotate(-15deg)';
+      wordEl.style.transform = 'rotate(-12deg)';
       wordEl.style.color = '#f87171';
-      disp.style.background = '#1e1b4b';
+      box.style.background = '#1e1b4b';
     } else if (word === 'WEAKEN') {
       wordEl.style.transform = 'scale(0.85)';
-      wordEl.style.opacity = '0.6';
       wordEl.style.color = '#94a3b8';
+      box.style.background = '#334155';
     } else if (word === 'CONCENTRATE') {
-      wordEl.style.transform = 'scale(1)';
+      wordEl.style.transform = 'none';
       wordEl.style.letterSpacing = '6px';
       wordEl.style.color = '#4ade80';
+      box.style.background = '#022c22';
     } else {
       wordEl.style.transform = 'none';
-      wordEl.style.opacity = '1';
+      wordEl.style.letterSpacing = '2px';
       wordEl.style.color = '#facc15';
-      disp.style.background = '#0f172a';
+      box.style.background = '#0f172a';
     }
   }
 
-  // PAGE 4: CLOZE LIVE FEEDBACK
-  function checkClozeLive(idx, correct) {
-    const sel = document.getElementById(`cloze_${idx}`);
-    const span = document.getElementById(`cspan_${idx}`);
-    if (sel.value === correct) {
-      sel.style.borderColor = 'var(--success)';
-      sel.style.background = 'var(--success-bg)';
-      span.innerHTML = '<span class="live-badge valid">✔</span>';
-    } else if (sel.value === '') {
-      sel.style.borderColor = 'var(--border)';
-      sel.style.background = 'white';
-      span.innerHTML = '';
-    } else {
-      sel.style.borderColor = 'var(--error)';
-      sel.style.background = 'var(--error-bg)';
-      span.innerHTML = '<span class="live-badge invalid">✖</span>';
-    }
-  }
+  // Live Vocabulary Trackers (Page 4 & Page 5)
+  const vocabList = [
+    "apologize", "assemble", "boost", "coax", "concentrate",
+    "consult", "devote", "irritate", "manage", "refer",
+    "reject", "reveal", "topple", "transport", "weaken"
+  ];
 
-  function initChips() {
-    const wContainer = document.getElementById('writingChips');
-    const sContainer = document.getElementById('storyChips');
-    wContainer.innerHTML = VOCAB_WORDS.map(w => `<span class="vocab-tracker-chip" id="wc_${w}">${w}</span>`).join('');
-    sContainer.innerHTML = VOCAB_WORDS.map(w => `<span class="vocab-tracker-chip" id="sc_${w}">${w}</span>`).join('');
-  }
-
-  function trackWritingVocab() {
-    const text = document.getElementById('tyCardText').value.toLowerCase();
-    VOCAB_WORDS.forEach(w => {
-      const chip = document.getElementById(`wc_${w}`);
-      if (text.includes(w)) chip.classList.add('used');
-      else chip.classList.remove('used');
-    });
+  function trackCardVocab() {
+    const text = document.getElementById('ty-card-text').value.toLowerCase();
+    let count = 0;
+    vocabList.forEach(w => { if (text.includes(w)) count++; });
+    document.getElementById('used-count').textContent = count;
   }
 
   function trackStoryVocab() {
-    const text = document.getElementById('storyText').value.toLowerCase();
-    VOCAB_WORDS.forEach(w => {
-      const chip = document.getElementById(`sc_${w}`);
-      if (text.includes(w)) chip.classList.add('used');
-      else chip.classList.remove('used');
-    });
+    const text = document.getElementById('action-story-text').value.toLowerCase();
+    let count = 0;
+    vocabList.forEach(w => { if (text.includes(w)) count++; });
+    document.getElementById('story-count').textContent = count;
   }
 
-  // PAGE 5: CAPTIONS / PUT WORDS INTO ACTION
-  const P5_ITEMS = [
-    { num: 1, pre: "Look at the farmer speak gently to the animals and ", ans: "coax", post: " them into the house!" },
-    { num: 2, pre: "The animals ", ans: "assemble", post: " in the kitchen in a big group." },
-    { num: 3, pre: "The mess and noise ", ans: "irritate", post: " the farmer's family and everyone gets annoyed." },
-    { num: 4, pre: "Uh, oh! The furniture will ", ans: "topple", post: " down and fall on the floor!" },
-    { num: 5, pre: "The farmer will ", ans: "apologize", post: " to the Wise Woman and say that he is sorry." },
-    { num: 6, pre: "The Wise Woman will ", ans: "reveal", post: " the secret behind her plan." }
-  ];
-
-  function initPage5() {
-    const cont = document.getElementById('actionContainer');
-    cont.innerHTML = P5_ITEMS.map((it, idx) => `
-      <div class="item-card" id="act_card_${idx}">
-        <div style="font-size:1.02rem;">
-          <strong>${it.num}.</strong> ${it.pre}
-          <input type="text" id="act_in_${idx}" style="width:140px; font-weight:600;" placeholder="type verb..." oninput="checkActLive(${idx})">
-          ${it.post}
-          <span id="act_badge_${idx}"></span>
-        </div>
-      </div>
-    `).join('');
+  // Page 6 Hint Toggle (Strictly Hidden until button is clicked)
+  function toggleHint(id) {
+    const el = document.getElementById(id);
+    el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
   }
 
-  function checkActLive(idx) {
-    const val = document.getElementById(`act_in_${idx}`).value.trim().toLowerCase();
-    const card = document.getElementById(`act_card_${idx}`);
-    const badge = document.getElementById(`act_badge_${idx}`);
-    const expected = P5_ITEMS[idx].ans;
-
-    if (val === expected) {
-      card.className = 'item-card is-correct';
-      badge.innerHTML = '<span class="live-badge valid">✔ Correct</span>';
-    } else if (val.length === 0) {
-      card.className = 'item-card';
-      badge.innerHTML = '';
-    } else if (expected.startsWith(val)) {
-      card.className = 'item-card';
-      badge.innerHTML = '<span style="font-size:0.8rem; color:#64748b;">typing...</span>';
-    } else {
-      card.className = 'item-card is-incorrect';
-      badge.innerHTML = '<span class="live-badge invalid">✖ Check spelling</span>';
-    }
-  }
-
-  // PAGE 6: TENSE DRILL
-  const TENSE_ITEMS = [
-    { num: 1, sentence: "The fifth graders are really working hard and spend most of their time helping animals. They are ", ans: "devoting", post: " time to this activity.", clue: "Ongoing action: devote + -ing = devoting" },
-    { num: 2, sentence: "This year, they are focusing on learning about farming. Today, they are ", ans: "concentrating", post: " on farm animals and crops.", clue: "Ongoing action: concentrate + -ing = concentrating" },
-    { num: 3, sentence: "Yesterday, the principal met with farmers to learn about crops. He ", ans: "consulted", post: " with the farmers.", clue: "Past tense: consult + -ed = consulted" },
-    { num: 4, sentence: "The principal has arranged to get farmers to come to school to talk with students. She ", ans: "managed", post: " to get five speakers to come.", clue: "Past tense: manage + -d = managed" },
-    { num: 5, sentence: "Holding this meeting at school is easier than moving five classes of students! This way the principal would not be ", ans: "transporting", post: " 120 students.", clue: "Ongoing action: transport + -ing = transporting" }
-  ];
-
-  function initPage6() {
-    const cont = document.getElementById('tenseContainer');
-    cont.innerHTML = TENSE_ITEMS.map((it, idx) => `
-      <div class="item-card" id="tense_card_${idx}">
-        <div style="font-size:1rem;">
-          <strong>${it.num}.</strong> ${it.sentence}
-          <input type="text" id="tense_in_${idx}" style="width:160px; font-weight:600;" placeholder="correct tense..." oninput="checkTenseLive(${idx})">
-          ${it.post}
-          <span id="tense_badge_${idx}"></span>
-        </div>
-        <div style="font-size:0.8rem; color:#64748b; margin-top:4px;" id="tense_clue_${idx}">${it.clue}</div>
-      </div>
-    `).join('');
-  }
-
-  function checkTenseLive(idx) {
-    const val = document.getElementById(`tense_in_${idx}`).value.trim().toLowerCase();
-    const card = document.getElementById(`tense_card_${idx}`);
-    const badge = document.getElementById(`tense_badge_${idx}`);
-    const expected = TENSE_ITEMS[idx].ans;
-
-    if (val === expected) {
-      card.className = 'item-card is-correct';
-      badge.innerHTML = '<span class="live-badge valid">✔ Exact Form!</span>';
-    } else if (val.length === 0) {
-      card.className = 'item-card';
-      badge.innerHTML = '';
-    } else if (expected.startsWith(val)) {
-      card.className = 'item-card';
-      badge.innerHTML = '<span style="font-size:0.8rem; color:#64748b;">typing...</span>';
-    } else {
-      card.className = 'item-card is-incorrect';
-      badge.innerHTML = '<span class="live-badge invalid">✖ Try again</span>';
-    }
-  }
-
-  function checkBumper() {
-    const text = document.getElementById('bumperInput').value.trim();
-    const fb = document.getElementById('bumperFeedback');
-    if (!text) {
-      fb.innerHTML = '';
+  function checkBumperSlogan(inp) {
+    const val = inp.value.trim().toLowerCase();
+    const fb = document.getElementById('bumper-feedback');
+    if (!val) {
+      fb.textContent = '';
       return;
     }
-    const startsDoNot = text.toLowerCase().startsWith("do not");
-    const firstWord = text.split(" ")[0].toLowerCase();
-    const isVerb = VOCAB_WORDS.includes(firstWord);
+    const startsDoNot = val.startsWith('do not');
+    const firstWord = val.split(' ')[0];
+    const isVerb = vocabList.includes(firstWord);
 
     if (startsDoNot || isVerb) {
-      fb.innerHTML = '<span style="color:var(--success)">✔ Great slogan format! Valid imperative or "Do not" start.</span>';
+      fb.textContent = '✔ Valid bumper sticker format!';
+      fb.className = 'feedback correct';
     } else {
-      fb.innerHTML = '<span style="color:var(--warning)">Remember: Start your slogan with an action verb or the words "Do not".</span>';
+      fb.textContent = 'Begin your slogan with an action verb or "Do not"';
+      fb.className = 'feedback incorrect';
     }
   }
 
-  // PAGE 7: MASTERY ENGINE EVALUATION
-  const MASTERY_QUESTIONS = [
-    { id: 1, type: "select", prompt: "1. When you put together the pieces of a model car, bookcase, or table, you [blank] it.", opts: ["boost", "transport", "assemble"], ans: "assemble", expl: "'Assemble' means to put pieces or groups together." },
-    { id: 2, type: "select", prompt: "2. If you have poison ivy and you scratch it, you will probably [blank] it.", opts: ["irritate", "topple", "manage"], ans: "irritate", expl: "Scratching an itch makes it more irritated or bothered." },
-    { id: 3, type: "select", prompt: "3. When raccoons chew on a tree, they [blank] the inner core and the tree falls down.", opts: ["weaken", "boost", "reveal"], ans: "weaken", expl: "Chewing through wood causes the trunk to lose strength (weaken)." },
-    { id: 4, type: "select", prompt: "4. People who enjoy their hobbies often [blank] a lot of time to them.", opts: ["coax", "devote", "refer"], ans: "devote", expl: "'Devote' means to give time and dedication to an activity." },
-    { id: 5, type: "select", prompt: "5. Because Raul was reading a good book, he did not [blank] on the TV show.", opts: ["reject", "concentrate", "consult"], ans: "concentrate", expl: "'Concentrate' means to direct attention or focus." },
-    { id: 6, type: "radio", prompt: "6. Which of the following actions might make someone apologize?", opts: ["A. eating a salad", "B. walking to school", "C. stepping on someone's toes", "D. writing an A+ book report"], ans: "C", expl: "Stepping on someone's toes is an accident that calls for saying you are sorry." },
-    { id: 7, type: "radio", prompt: "7. Which of the following would be the easiest for you to transport?", opts: ["A. time", "B. food", "C. rain", "D. hope"], ans: "B", expl: "Food is physical and easy to move from place to place." },
-    { id: 8, type: "radio", prompt: "8. Which of the following would most likely topple?", opts: ["A. the foundation of a house", "B. a tower of blocks", "C. money", "D. ducks"], ans: "B", expl: "A high tower of toy blocks is unstable and easily falls over." },
-    { id: 9, type: "radio", prompt: "9. Whom would you most likely consult if you were ill?", opts: ["A. a doctor", "B. a teacher", "C. a lawyer", "D. an athlete"], ans: "A", expl: "You consult a doctor for medical advice and help." },
-    { id: 10, type: "radio", prompt: "10. Which of the following would a banker manage?", opts: ["A. liberty", "B. animals", "C. bakery goods", "D. money"], ans: "D", expl: "Bankers handle, direct, and manage monetary accounts." }
-  ];
+  // Page 7 Mastery Grading Engine
+  const masteryKey = {
+    mq1: { ans: 'assemble', expl: "'Assemble' means to put pieces or groups together." },
+    mq2: { ans: 'irritate', expl: "Scratching an itch makes it more irritated or bothered." },
+    mq3: { ans: 'weaken', expl: "Chewing through the inner wood causes the tree to lose strength (weaken)." },
+    mq4: { ans: 'devote', expl: "'Devote' means to give time and dedication to a purpose." },
+    mq5: { ans: 'concentrate', expl: "'Concentrate' means to focus your attention." },
+    mq6: { ans: 'C', expl: "Accidentally stepping on someone's toes requires saying you are sorry." },
+    mq7: { ans: 'B', expl: "Food is a physical object that can easily be moved or carried." },
+    mq8: { ans: 'B', expl: "A high tower of toy blocks is unstable and easily falls over." },
+    mq9: { ans: 'A', expl: "You consult a doctor for medical evaluation and advice." },
+    mq10: { ans: 'D', expl: "Bankers handle, direct, and manage accounts of money." }
+  };
 
-  function initPage7() {
-    const cont = document.getElementById('masteryQuestions');
-    cont.innerHTML = MASTERY_QUESTIONS.map(q => {
-      if (q.type === 'select') {
-        return `
-          <div class="item-card" id="mq_card_${q.id}">
-            <p><strong>${q.prompt}</strong></p>
-            <div style="margin-top:8px;">
-              <select id="mq_ans_${q.id}">
-                <option value="">--choose verb--</option>
-                ${q.opts.map(o => `<option value="${o}">${o}</option>`).join('')}
-              </select>
-            </div>
-          </div>
-        `;
-      } else {
-        return `
-          <div class="item-card" id="mq_card_${q.id}">
-            <p><strong>${q.prompt}</strong></p>
-            <div class="mc-grid">
-              ${q.opts.map(o => {
-                const letter = o[0];
-                return `
-                  <label style="display:flex; align-items:center; gap:8px; cursor:pointer; background:#f8fafc; padding:8px 12px; border-radius:6px; border:1px solid var(--border);">
-                    <input type="radio" name="mq_rad_${q.id}" value="${letter}"> ${o}
-                  </label>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
-      }
-    }).join('');
-  }
+  const masteryPrompts = {
+    mq1: "1. Put together pieces of a model car or table",
+    mq2: "2. Scratching poison ivy",
+    mq3: "3. Raccoons chewing on inner core of tree",
+    mq4: "4. People enjoying hobbies and their time",
+    mq5: "5. Not focusing on the TV show",
+    mq6: "6. Action that makes someone apologize",
+    mq7: "7. Easiest thing to transport",
+    mq8: "8. Item that would most likely topple",
+    mq9: "9. Person to consult if you are ill",
+    mq10: "10. Item a banker would manage"
+  };
 
-  function evaluateMastery() {
+  function scoreMastery() {
     let score = 0;
-    const tbody = document.getElementById('reportRows');
-    tbody.innerHTML = '';
+    const rows = document.getElementById('diagnostic-rows');
+    rows.innerHTML = '';
 
-    MASTERY_QUESTIONS.forEach(q => {
-      let userVal = '';
-      if (q.type === 'select') {
-        userVal = document.getElementById(`mq_ans_${q.id}`).value;
+    // Questions 1-5 (Select dropdowns)
+    for (let i = 1; i <= 5; i++) {
+      const sel = document.getElementById(`mq${i}`);
+      const val = sel.value;
+      const right = masteryKey[`mq${i}`].ans;
+      const isCorrect = (val === right);
+      if (isCorrect) {
+        score++;
+        sel.className = 'correct';
       } else {
-        const checked = document.querySelector(`input[name="mq_rad_${q.id}"]:checked`);
-        userVal = checked ? checked.value : '';
+        sel.className = 'incorrect';
       }
 
-      const isRight = (userVal.toLowerCase() === q.ans.toLowerCase());
-      if (isRight) score++;
-
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${q.id}</td>
-        <td>${q.prompt.substring(0, 45)}...</td>
-        <td style="font-weight:600; color:${isRight ? 'var(--success)' : 'var(--error)'}">${userVal || '(unanswered)'}</td>
-        <td>${isRight ? '✔ Correct' : '✖ Incorrect (Ans: ' + q.ans + ')'}</td>
-        <td style="font-size:0.85rem; color:#475569;">${q.expl}</td>
+      rows.innerHTML += `
+        <tr>
+          <td>${i}</td>
+          <td>${masteryPrompts[`mq${i}`]}</td>
+          <td style="font-weight: bold; color: ${isCorrect ? 'var(--success)' : 'var(--danger)'}">${val || '(unanswered)'}</td>
+          <td>${isCorrect ? '✔ Correct' : '✖ Incorrect (Ans: ' + right + ')'}</td>
+          <td>${masteryKey[`mq${i}`].expl}</td>
+        </tr>
       `;
-      tbody.appendChild(tr);
-    });
+    }
 
-    const percent = Math.round((score / 10) * 100);
-    document.getElementById('gradeBadge').innerText = `${percent}%`;
-    document.getElementById('gradeBadge').style.color = percent >= 80 ? 'var(--success)' : (percent >= 60 ? 'var(--warning)' : 'var(--error)');
-    document.getElementById('gradeSummary').innerText = `You correctly answered ${score} out of 10 questions.`;
-    document.getElementById('masteryResults').style.display = 'block';
-    document.getElementById('masteryResults').scrollIntoView({ behavior: 'smooth' });
+    // Questions 6-10 (Radios)
+    for (let i = 6; i <= 10; i++) {
+      const picked = document.querySelector(`input[name="mq${i}"]:checked`);
+      const val = picked ? picked.value : '';
+      const right = masteryKey[`mq${i}`].ans;
+      const isCorrect = (val === right);
+      if (isCorrect) score++;
+
+      rows.innerHTML += `
+        <tr>
+          <td>${i}</td>
+          <td>${masteryPrompts[`mq${i}`]}</td>
+          <td style="font-weight: bold; color: ${isCorrect ? 'var(--success)' : 'var(--danger)'}">${val || '(unanswered)'}</td>
+          <td>${isCorrect ? '✔ Correct' : '✖ Incorrect (Ans: ' + right + ')'}</td>
+          <td>${masteryKey[`mq${i}`].expl}</td>
+        </tr>
+      `;
+    }
+
+    const pct = Math.round((score / 10) * 100);
+    const banner = document.getElementById('mastery-banner');
+    banner.style.display = 'block';
+    banner.textContent = `You scored ${score} / 10 (${pct}%)!`;
+    banner.style.background = pct >= 80 ? 'var(--success-bg)' : 'var(--danger-bg)';
+    banner.style.color = pct >= 80 ? 'var(--success)' : 'var(--danger)';
+    
+    document.getElementById('diagnostic-section').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // INITIALIZE EVERYTHING ON LOAD
+  // Set default initial state
   window.onload = function() {
-    initPage2();
-    initPage3();
-    initChips();
-    initPage5();
-    initPage6();
-    initPage7();
-    updateBillboard();
+    renderBillboard();
+    document.getElementById('prev-btn').disabled = true;
   };
 </script>
 </body>
